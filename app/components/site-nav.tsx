@@ -10,7 +10,7 @@ const signatureFont = Mrs_Saint_Delafield({
 export function SiteNav() {
   return (
     <nav className="site-nav" aria-label="Main navigation">
-      <div className="site-nav-brand">
+      <div className="site-nav-logo">
         <span className={signatureFont.className + " site-nav-signature"}>
           Hafizi
         </span>
