@@ -7,10 +7,10 @@ const signatureFont = Mrs_Saint_Delafield({
   display: "swap",
 });
 
-export function SiteNav() {
+export function SiteNav({ showLogo = true }: { showLogo?: boolean }) {
   return (
-    <nav className="site-nav" aria-label="Main navigation">
-      <div className="site-nav-logo">
+    <nav className="site-nav" data-show-logo={showLogo} aria-label="Main navigation">
+      {showLogo && <div className="site-nav-logo">
         <span className={signatureFont.className + " site-nav-signature"}>
           Hafizi
         </span>
@@ -30,7 +30,9 @@ export function SiteNav() {
           />
         </svg>
       </div>
+      }
       <div className="site-nav-links">
+        <Link href="/concept">My UI Concept</Link>
         <Link href="/#work">Work</Link>
         <Link href="/#about">About</Link>
         <Link href="/#experience">Experience</Link>
