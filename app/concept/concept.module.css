@@ -13,13 +13,13 @@
 .heading { font-size: clamp(38px, 4.5cqw, 68px); }
 .sectionHeading { font-size: clamp(30px, 3.6cqw, 46px); }
 .description { max-width: 44ch; margin: 20px 0 0; color: var(--text-secondary); font-size: 14px; line-height: 1.7; }
-.hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; min-height: 410px; overflow: hidden; isolation: isolate; }
+.hero { position: relative; display: grid; grid-template-columns: 1fr 1fr; z-index: 1; min-height: 410px; overflow: hidden; isolation: isolate; }
 .heroCopy { position: relative; z-index: 1; align-self: center; padding: 64px 0 64px clamp(24px, 4.5cqw, 64px); }
 .heroCopy .description { max-width: 37ch; }
 .heroImage { position: absolute; inset: 0 0 0 36%; z-index: -1; }
 .heroImage::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bg), transparent 65%); }
 .heroImage img { object-fit: cover; object-position: 58% center; }
-.section { padding: 44px clamp(24px, 4.5cqw, 64px); border-top: 1px solid var(--border); }
+.section { position: relative; z-index: 1; padding: 44px clamp(24px, 4.5cqw, 64px); border-top: 1px solid var(--border); }
 .idea, .visual, .journey { display: grid; grid-template-columns: .9fr 1.1fr; align-items: center; gap: 36px; }
 .idea, .visual { background: var(--surface); }
 .ideaFigure { min-width: 0; margin: 0; }
@@ -88,7 +88,7 @@
 /* Keep the desktop topbar aligned to the same page-wide grid as other routes. */
 .layout { --sidebar-width: 260px; }
 .layout:has(> aside[data-collapsed="true"]) { --sidebar-width: 80px; }
-.layout > aside { position: relative; z-index: 1; }
+.layout > aside { position: relative; z-index: 3; }
 .mainColumn { display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .mainColumn > nav { font-family: Arial, Helvetica, sans-serif; }
 
@@ -105,11 +105,11 @@
 }
 
 @media (max-width: 1023px) {
-  .mainColumn > nav { flex-wrap: wrap; justify-content: flex-end; }
-  .mainColumn > nav :global(.site-nav-links) {
-    width: 100%;
-    order: 1;
-    flex-wrap: wrap;
-    gap: 16px 24px;
-  }
+  .mainColumn > nav { padding-inline: 16px; }
+  .mainColumn > nav :global(.site-nav-glass) { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 12px; border-radius: 28px; }
+  .mainColumn > nav :global(.site-nav-links) { flex-basis: 100%; flex-wrap: wrap; gap: 0 18px; }
+}
+.page > section { scroll-margin-top: 116px; }
+@media (max-width: 1023px) {
+  .page > section { scroll-margin-top: 240px; }
 }

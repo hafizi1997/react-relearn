@@ -81,106 +81,107 @@ a:focus-visible {
 }
 
 .site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  flex-shrink: 0;
+  pointer-events: none;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 24px;
+  gap: 48px;
   padding: 18px var(--side-padding);
-  border-bottom: 1px solid var(--border);
 }
 
 .site-nav-logo {
   -webkit-user-select: none;
   user-select: none;
   display: flex;
-  flex: 0 0 auto;
+  flex: 0 0 120px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 120px;
   color: var(--text-primary);
 }
+.site-nav-signature { font-size: 56px; line-height: 1; transform: rotate(-4deg); }
+.site-nav-signature-underline { flex-shrink: 0; margin-top: -7.2px; }
 
-.site-nav-signature {
-  font-size: 56px;
-  line-height: 1;
-  transform: rotate(-4deg);
-}
-
-.site-nav-signature-underline {
-  flex-shrink: 0;
-  margin-top: -7.2px;
-}
-
-.site-nav-links {
+.site-nav-glass {
   display: flex;
+  flex: 1;
   align-items: center;
-  justify-content: center;
-  gap: 24px;
-  order: 1;
-  width: 100%;
-  font-size: 15px;
+  gap: 20px;
+  min-width: 0;
+  max-width: 1040px;
+  min-height: 62px;
+  margin-left: auto;
+  padding: 8px 9px 8px 24px;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 35%, transparent);
+  border-radius: 999px;
+  background: var(--surface);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 25%, transparent), inset 0 -1px 0 color-mix(in srgb, var(--text-primary) 8%, transparent), 0 8px 24px color-mix(in srgb, var(--surface-deep) 16%, transparent);
 }
 
-.site-nav a {
-  text-decoration: none;
+@supports ((backdrop-filter: blur(20px)) or (-webkit-backdrop-filter: blur(20px))) {
+  .site-nav-glass {
+    background: linear-gradient(120deg, color-mix(in srgb, var(--text-primary) 16%, transparent), color-mix(in srgb, var(--text-primary) 5%, transparent) 55%, color-mix(in srgb, var(--text-primary) 12%, transparent)), color-mix(in srgb, var(--surface) 68%, transparent);
+    -webkit-backdrop-filter: blur(20px) saturate(140%);
+    backdrop-filter: blur(20px) saturate(140%);
+  }
 }
 
+.site-nav-links { display: flex; flex: 1; min-width: 0; align-items: center; justify-content: center; gap: clamp(16px, 2.5vw, 40px); font-size: 15px; }
+.site-nav a { text-decoration: none; }
 .site-nav-links a {
-  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  border-radius: 999px;
   transition: color 150ms;
 }
-
-.site-nav-links a:hover {
-  color: var(--highlight);
-}
-
-.site-nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-
+.site-nav-links a:hover { color: var(--highlight); }
+.site-nav-actions { display: flex; flex: 0 0 auto; align-items: center; }
 .site-nav-contact {
   display: inline-flex;
   align-items: center;
-  background: var(--button-bg);
-  color: var(--button-text);
-  padding: 12px 22px;
+  justify-content: center;
+  min-height: 44px;
+  padding: 10px 22px;
+  border: 1px solid color-mix(in srgb, var(--text-primary) 40%, transparent);
   border-radius: 999px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--text-primary) 22%, transparent), color-mix(in srgb, var(--text-primary) 8%, transparent));
+  color: var(--text-primary);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text-primary) 25%, transparent), 0 3px 10px color-mix(in srgb, var(--surface-deep) 12%, transparent);
   font-size: 14px;
   font-weight: 500;
   white-space: nowrap;
-  transition: background-color 150ms;
+  transition: background-color 150ms, border-color 150ms, color 150ms;
 }
-
-.site-nav-contact:hover {
-  background: var(--highlight);
-}
-
-@media (min-width: 768px) {
-  .site-nav {
-    flex-wrap: nowrap;
-  }
-
-  .site-nav-links {
-    order: 0;
-    width: auto;
-    gap: 40px;
-  }
-}
+.site-nav-contact:hover { background-color: var(--highlight); border-color: var(--highlight); color: var(--surface-deep); }
+.site-nav a:focus-visible { outline: 2px solid var(--highlight); outline-offset: 3px; }
 
 @media (min-width: 1024px) {
-  .site-nav {
-    padding-inline: 104px;
-  }
+  .site-nav { padding-inline: 104px; }
 }
-
+@media (max-width: 1023px) {
+  .site-nav { flex-wrap: wrap; gap: 20px; }
+  .site-nav-glass { flex-basis: 100%; max-width: none; }
+}
+@media (max-width: 600px) {
+  .site-nav-glass { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 12px; border-radius: 28px; }
+  .site-nav-links { flex-basis: 100%; flex-wrap: wrap; gap: 0 18px; font-size: 13px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-nav a { transition: none; }
+}
 .contact-placeholder {
   grid-column: 1 / -1;
   max-width: 720px;
   padding-block: 24px;
+  padding-inline: var(--side-padding);
 }
 
 .contact-placeholder-label {
@@ -350,4 +351,69 @@ a:focus-visible {
     /* Keep the full photograph visible; blend only its empty outer edge. */
     mask-image: linear-gradient(to right, transparent, black 4%);
   }
+}
+
+.site-nav-glass, .site-nav-logo { pointer-events: auto; }
+
+.page-shell {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.floral-decor {
+  position: fixed;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.floral-decor::before,
+.floral-decor::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: clamp(130px, 16vw, 240px);
+  background-image: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
+  background-repeat: repeat-y;
+  background-position: left -62px top 28px;
+  background-size: 230px auto;
+  opacity: .3;
+}
+
+.floral-decor::before {
+  left: 0;
+  mask-image: linear-gradient(90deg, #000 0 64%, transparent 100%);
+}
+
+.floral-decor::after {
+  right: 0;
+  transform: scaleX(-1);
+  mask-image: linear-gradient(90deg, #000 0 64%, transparent 100%);
+}
+
+@media (max-width: 1023px) {
+  .floral-decor::before,
+  .floral-decor::after {
+    width: 130px;
+    background-position: left -72px top 24px;
+    background-size: 190px auto;
+    opacity: .18;
+  }
+
+  .floral-decor::after {
+    display: none;
+  }
+}
+body:has(.concept-page-layout) .floral-decor::before {
+  width: 260px;
+  background-position: left -62px top 28px;
+  mask-image: none;
+}
+
+body:has(.concept-page-layout > aside[data-collapsed="true"]) .floral-decor::before {
+  width: 80px;
+  background-position: left -94px top 28px;
 }

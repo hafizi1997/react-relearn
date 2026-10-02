@@ -13,7 +13,7 @@ const items: SidebarItem[] = [
 
 export default function ConceptLayout({ children }: { children: ReactNode }) {
   return (
-    <div className={styles.layout}>
+    <div className={`${styles.layout} concept-page-layout`}>
       <Sidebar items={items} title="On this page" />
       <div className={styles.mainColumn}>
         <SiteNav showLogo={false} />

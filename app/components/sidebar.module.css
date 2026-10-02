@@ -1,4 +1,7 @@
 .sidebar {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
   flex: 0 0 260px;
   width: 260px;
   padding: 28px 16px 24px;
@@ -8,6 +11,23 @@
   border-right: 1px solid var(--border);
   color: var(--text-secondary);
 }
+.sidebar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
+  background-repeat: repeat-y;
+  background-position: left -62px top 28px;
+  background-size: 230px auto;
+  opacity: .3;
+}
+
+.sidebar[data-collapsed="true"]::before {
+  background-position: left -94px top 28px;
+}
+.header, .navigation { position: relative; z-index: 1; }
 .header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 12px 22px; }
 .title { margin: 0; color: var(--highlight); font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; }
 .toggle { display: grid; place-items: center; width: 36px; height: 36px; border: 0; border-radius: 6px; background: transparent; color: var(--text-primary); cursor: pointer; }
