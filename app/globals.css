@@ -115,7 +115,7 @@ a:focus-visible {
   min-width: 0;
   max-width: 1040px;
   min-height: 62px;
-  margin-left: auto;
+  margin: auto;
   padding: 8px 9px 8px 24px;
   border: 1px solid color-mix(in srgb, var(--text-primary) 35%, transparent);
   border-radius: 999px;

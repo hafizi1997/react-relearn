@@ -18,9 +18,11 @@
   z-index: 0;
   pointer-events: none;
   background-image: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
-  background-repeat: repeat-y;
-  background-position: left -62px top 28px;
+  background-repeat: no-repeat;
+  background-position: left -60px top 28px;
   background-size: 230px auto;
+  transform: rotate(7deg);
+  transform-origin: top left;
   opacity: .3;
 }
 
