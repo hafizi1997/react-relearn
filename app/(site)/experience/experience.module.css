@@ -22,7 +22,8 @@
   pointer-events: none;
 }
 
-.leftFlowers { z-index: 0; }
+/* Fixed positions within each left set keep spacing stable on long pages. */
+.leftFlowers { bottom: auto; z-index: 0; }
 .rightDecorations { z-index: 2; }
 
 .leftFlowers::before {
@@ -66,21 +67,21 @@
 }
 
 .leftSprig {
-  top: 19%;
+  top: 700px;
   right: 80px;
   width: 360px;
   --rotation: 95deg;
 }
 
 .leftOrnament {
-  top: 31%;
+  top: 1200px;
   left: -70px;
   width: 300px;
   --rotation: 5deg;
 }
 
 .leftFloral {
-  top: 40%;
+  top: 1530px;
   left: -280px;
   width: 620px;
   --rotation: 170deg;
@@ -187,7 +188,7 @@
 
 @media (max-width: 1023px) {
   .page { --flower-width: 160px; }
-  .rightTile { --scale: .6; opacity: .6; }
+  .rightTile { --scale: .6; }
 }
 
 @media (max-width: 600px) {
