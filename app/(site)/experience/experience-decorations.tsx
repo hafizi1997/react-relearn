@@ -3,8 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import styles from "./experience.module.css";
 
-// Keep in sync with .rightTile in experience.module.css.
-const TILE_HEIGHT = 1800;
+// Leave room for the final flower at 1940px, including its rotated height.
+const TILE_HEIGHT = 1900;
 const leftFlowers = [styles.leftSprig, styles.leftOrnament, styles.leftFloral];
 const rightFlowers = [styles.rightUpperFloral, styles.rightSprig, styles.rightOrnament, styles.rightLowerFloral];
 
@@ -34,7 +34,7 @@ export function ExperienceDecorations() {
       </div>
       <div ref={rightRef} className={styles.rightDecorations} aria-hidden="true">
         {Array.from({ length: tileCount }, (_, index) => (
-          <div key={index} className={styles.rightTile} style={{ top: index * TILE_HEIGHT }}>
+          <div key={index} className={styles.rightTile} style={{ top: index * TILE_HEIGHT, height: TILE_HEIGHT }}>
             {rightFlowers.map((flower) => (
               <span key={flower} className={`${styles.flower} ${flower}`} />
             ))}
