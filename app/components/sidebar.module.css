@@ -71,8 +71,8 @@
 .floral {
   --img: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
   --flip-x: -1;
-  --w: 640px;
-  --right: -88px;
+  --w: 620px;
+  --left: -280px;
   --top: 70%;
   --rotate: 170deg;
   --opacity: .3;
@@ -80,7 +80,6 @@
 
 .sidebar[data-collapsed="true"] .sprig { --right: -100px; }
 .sidebar[data-collapsed="true"] .ornament { --left: -130px; }
-.sidebar[data-collapsed="true"] .floral { --left: -120px; }
 
 .header, .navigation { position: relative; z-index: 1; }
 .header { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 12px 22px; }
