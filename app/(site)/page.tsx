@@ -1,9 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
+import { PageDecorations } from "../components/page-decorations";
 
 export default function Home() {
   return (
     <div className="page-shell flex flex-col flex-1 items-center bg-background font-sans">
+      <PageDecorations />
       <main className="content-grid flex-1 bg-surface">
         <section className="hero-section" aria-labelledby="hero-heading">
           <div className="hero-content">

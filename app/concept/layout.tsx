@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { PageDecorations } from "../components/page-decorations";
 import { Sidebar, type SidebarItem } from "../components/sidebar";
 import { SiteNav } from "../components/site-nav";
 import styles from "./concept.module.css";
@@ -16,6 +17,7 @@ export default function ConceptLayout({ children }: { children: ReactNode }) {
     <div className={`${styles.layout} concept-page-layout`}>
       <Sidebar items={items} title="On this page" />
       <div className={styles.mainColumn}>
+        <PageDecorations side="right" />
         <SiteNav showLogo={false} />
         <main className={styles.content}>{children}</main>
       </div>

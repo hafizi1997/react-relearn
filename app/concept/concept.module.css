@@ -89,7 +89,7 @@
 .layout { --sidebar-width: 260px; }
 .layout:has(> aside[data-collapsed="true"]) { --sidebar-width: 80px; }
 .layout > aside { position: relative; z-index: 3; }
-.mainColumn { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.mainColumn { position: relative; display: flex; flex-direction: column; flex: 1; min-width: 0; }
 .mainColumn > nav { font-family: Arial, Helvetica, sans-serif; }
 
 @media (min-width: 1024px) {
