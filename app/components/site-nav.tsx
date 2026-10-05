@@ -23,7 +23,7 @@ export function SiteNav({ showLogo = true }: { showLogo?: boolean }) {
           <Link href="/concept">My UI Concept</Link>
           <Link href="/#work">Work</Link>
           <Link href="/#about">About</Link>
-          <Link href="/#experience">Experience</Link>
+          <Link href="/experience">Experience</Link>
         </div>
         <div className="site-nav-actions">
           <Link className="site-nav-contact" href="/contact">Contact &rarr;</Link>

@@ -1,0 +1,207 @@
+.page {
+  --flower-width: 260px;
+  padding-left: var(--flower-width);
+}
+
+.leftDecorations {
+  position: absolute;
+  inset: 0 auto 0 0;
+  z-index: 2;
+  width: var(--flower-width);
+  max-width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Experience owns both flower arrangements independently of other pages. */
+.leftFlowers,
+.rightDecorations {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.leftFlowers { z-index: 0; }
+.rightDecorations { z-index: 2; }
+
+.leftFlowers::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png") left -60px top 28px / 230px auto no-repeat;
+  transform: rotate(7deg);
+  transform-origin: top left;
+  opacity: .3;
+}
+
+.flower {
+  position: absolute;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  aspect-ratio: 1;
+  opacity: .3;
+  transform: rotate(var(--rotation)) scale(calc(var(--scale, 1) * var(--mirror, 1)), var(--scale, 1));
+}
+
+.leftSprig,
+.rightSprig {
+  background-image: url("/arts/Elegant%20Golden%20Botanical%20Lily%20Sprig.png");
+  aspect-ratio: 3 / 4;
+  opacity: .25;
+}
+
+.leftOrnament,
+.rightOrnament {
+  background-image: url("/arts/Elegant%20Tan%20Lily%20Botanical%20Ornament.png");
+  opacity: .35;
+}
+
+.leftFloral,
+.rightUpperFloral,
+.rightLowerFloral {
+  background-image: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
+  --mirror: -1;
+}
+
+.leftSprig {
+  top: 19%;
+  right: 80px;
+  width: 360px;
+  --rotation: 95deg;
+}
+
+.leftOrnament {
+  top: 31%;
+  left: -70px;
+  width: 300px;
+  --rotation: 5deg;
+}
+
+.leftFloral {
+  top: 40%;
+  left: -280px;
+  width: 620px;
+  --rotation: 170deg;
+}
+
+.rightTile {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 1800px;
+}
+
+.rightUpperFloral {
+  top: 1940px;
+  right: -350px;
+  width: 640px;
+  --rotation: -19deg;
+}
+
+.rightSprig {
+  top: 100px;
+  right: -230px;
+  width: 420px;
+  --rotation: -95deg;
+}
+
+.rightOrnament {
+  top: 590px;
+  right: -100px;
+  width: 310px;
+  --rotation: -20deg;
+  --mirror: -1;
+}
+
+.rightLowerFloral {
+  top: 900px;
+  right: -320px;
+  width: 680px;
+  --rotation: -9deg;
+}
+
+.main {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: var(--content-max-width);
+  padding: 32px var(--side-padding) 80px;
+}
+
+.heading {
+  margin: 0 0 24px;
+  color: var(--text-secondary);
+  font-size: 11px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+}
+
+.gallery {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  column-count: 3;
+  column-gap: 24px;
+}
+
+.card {
+  display: inline-block;
+  vertical-align: top;
+  width: 100%;
+  margin: 0 0 24px;
+  break-inside: avoid;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: #eee8de;
+}
+
+.card:nth-child(3n + 2) {
+  background: #e8e1d5;
+}
+
+.card:nth-child(3n) {
+  background: #f2ede5;
+}
+
+.card video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 1199px) {
+  .gallery {
+    column-count: 2;
+    column-gap: 20px;
+  }
+
+  .card {
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .page { --flower-width: 160px; }
+  .rightTile { --scale: .6; opacity: .6; }
+}
+
+@media (max-width: 600px) {
+  .page { --flower-width: 72px; }
+
+  .leftDecorations { --scale: .6; }
+
+  .main {
+    padding-top: 24px;
+    padding-bottom: 48px;
+  }
+
+  .gallery {
+    column-count: 1;
+  }
+}

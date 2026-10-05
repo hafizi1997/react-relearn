@@ -1,0 +1,78 @@
+.flowers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.flowers[data-background-flower="true"]::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
+  background-repeat: no-repeat;
+  background-position: left -60px top 28px;
+  background-size: 230px auto;
+  transform: rotate(7deg);
+  transform-origin: top left;
+  opacity: .3;
+}
+
+.flowers[data-collapsed="true"]::before {
+  background-position: left -94px top 28px;
+}
+
+.decor {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--img) center / contain no-repeat;
+  width: var(--w);
+  aspect-ratio: var(--ratio, 1);
+  top: var(--top);
+  right: var(--right);
+  bottom: var(--bottom);
+  left: var(--left);
+  opacity: var(--opacity, .25);
+  transform:
+    rotate(var(--rotate, 0deg))
+    scale(
+      calc(var(--scale, 1) * var(--flip-x, 1)),
+      calc(var(--scale, 1) * var(--flip-y, 1))
+    );
+}
+
+.sprig {
+  --img: url("/arts/Elegant%20Golden%20Botanical%20Lily%20Sprig.png");
+  --w: 360px;
+  --ratio: 3 / 4;
+  --right: 80px;
+  --top: var(--sidebar-sprig-top, 33%);
+  --rotate: 95deg;
+}
+
+.ornament {
+  --img: url("/arts/Elegant%20Tan%20Lily%20Botanical%20Ornament.png");
+  --w: 300px;
+  --left: -70px;
+  --top: var(--sidebar-ornament-top, 54%);
+  --rotate: 5deg;
+  --opacity: .35;
+}
+
+.floral {
+  --img: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
+  --flip-x: -1;
+  --w: 620px;
+  --left: -280px;
+  --top: var(--sidebar-floral-top, 70%);
+  --rotate: 170deg;
+  --opacity: .3;
+}
+
+.flowers[data-collapsed="true"] .sprig { --right: -100px; }
+.flowers[data-collapsed="true"] .ornament { --left: -130px; }
+
