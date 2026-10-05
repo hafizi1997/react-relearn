@@ -26,6 +26,12 @@ function getServerHash() {
   return "";
 }
 
+const decorations = [
+  { id: "sprig", className: styles.sprig },
+  { id: "ornament", className: styles.ornament },
+  { id: "floral", className: styles.floral },
+] as const;
+
 export function Sidebar({ items, title = "On this page" }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
   const navigationId = useId();
@@ -34,6 +40,9 @@ export function Sidebar({ items, title = "On this page" }: SidebarProps) {
 
   return (
     <aside className={styles.sidebar} data-collapsed={collapsed}>
+      {decorations.map((decor) => (
+        <span key={decor.id} className={`${styles.decor} ${decor.className}`} aria-hidden="true" />
+      ))}
       <div className={styles.header}>
         <p className={styles.title}>{title}</p>
         <button
