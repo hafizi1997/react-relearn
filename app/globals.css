@@ -369,7 +369,8 @@ a:focus-visible {
 @media (min-width: 1024px) {
   .hero-section {
     grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
-    min-height: clamp(440px, 36vw, 600px);
+    /* Desktop navigation: 62px content + 18px padding on each side. */
+    min-height: calc(100svh - 98px);
   }
 
   .hero-content {
