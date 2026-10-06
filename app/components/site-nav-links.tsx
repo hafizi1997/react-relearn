@@ -13,7 +13,6 @@ type NavItem = {
 
 const navItems: NavItem[] = [
   { href: "/concept", label: "My UI Concept", path: "/concept" },
-  { href: "/#work", label: "Work", path: "/", hash: "work" },
   { href: "/#about", label: "About", path: "/", hash: "about" },
   { href: "/experience", label: "Experience", path: "/experience" },
 ];
