@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mrs_Saint_Delafield } from "next/font/google";
+import { SiteNavLinks } from "./site-nav-links";
 
 const signatureFont = Mrs_Saint_Delafield({
   weight: "400",
@@ -19,12 +20,7 @@ export function SiteNav({ showLogo = true }: { showLogo?: boolean }) {
         </div>
       )}
       <div className="site-nav-glass">
-        <div className="site-nav-links">
-          <Link href="/concept">My UI Concept</Link>
-          <Link href="/#work">Work</Link>
-          <Link href="/#about">About</Link>
-          <Link href="/experience">Experience</Link>
-        </div>
+        <SiteNavLinks />
         <div className="site-nav-actions">
           <Link className="site-nav-contact" href="/contact">Contact &rarr;</Link>
         </div>

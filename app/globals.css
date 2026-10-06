@@ -143,13 +143,36 @@ a:focus-visible {
 .site-nav-links a {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid transparent;
   color: var(--text-primary);
   white-space: nowrap;
   border-radius: 999px;
-  transition: color 150ms;
+  transition: background-color 180ms ease, border-color 180ms ease, box-shadow 180ms ease, color 180ms ease, transform 180ms ease;
 }
-.site-nav-links a:hover { color: color-mix(in srgb, var(--highlight) 78%, var(--surface-deep)); }
+.site-nav-links a:hover {
+  border-color: color-mix(in srgb, var(--surface) 42%, transparent);
+  background: color-mix(in srgb, var(--surface) 28%, transparent);
+  color: color-mix(in srgb, var(--highlight) 78%, var(--surface-deep));
+}
+.site-nav-links a.is-active {
+  border-color: color-mix(in srgb, var(--surface) 76%, var(--highlight));
+  background:
+    linear-gradient(150deg, color-mix(in srgb, var(--surface) 82%, transparent), color-mix(in srgb, var(--bg) 36%, transparent) 48%, color-mix(in srgb, var(--highlight) 18%, transparent)),
+    color-mix(in srgb, var(--surface) 44%, transparent);
+  color: var(--surface-deep);
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, var(--surface) 94%, transparent),
+    inset 0 -1px 0 color-mix(in srgb, var(--highlight) 22%, transparent),
+    0 10px 24px color-mix(in srgb, var(--surface-deep) 12%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--surface) 22%, transparent);
+}
+.site-nav-links a.is-active:hover {
+  color: var(--surface-deep);
+  transform: translateY(-1px);
+}
 .site-nav-actions { display: flex; flex: 0 0 auto; align-items: center; }
 .site-nav-contact {
   display: inline-flex;
@@ -185,9 +208,11 @@ a:focus-visible {
 @media (max-width: 600px) {
   .site-nav-glass { flex-wrap: wrap; justify-content: center; gap: 8px; padding: 12px; border-radius: 28px; }
   .site-nav-links { flex-basis: 100%; flex-wrap: wrap; gap: 0 18px; font-size: 13px; }
+  .site-nav-links a { min-height: 38px; padding-inline: 11px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .site-nav a { transition: none; }
+  .site-nav-links a.is-active:hover { transform: none; }
 }
 .contact-placeholder {
   grid-column: 1 / -1;
