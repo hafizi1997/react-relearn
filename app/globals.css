@@ -252,15 +252,70 @@ a:focus-visible {
 }
 
 .hero-section {
+  position: relative;
   grid-column: 1 / -1;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
   background: var(--bg);
   color: var(--text-primary);
+  min-height: 720px;
+  padding-bottom: 200px;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(to bottom, #f7f3eaf5 0%, #f7f3eae8 48%, #f7f3ea99 68%, #f7f3ea00 100%);
+}
+
+.hero-background {
+  z-index: 0;
+  object-fit: cover;
+  object-position: 60% center;
+}
+
+.hero-wau {
+  position: absolute;
+  z-index: 1;
+  right: 4%;
+  bottom: 10px;
+  width: min(72%, 380px);
+  height: 210px;
+  pointer-events: none;
+}
+
+.hero-wau canvas,
+.hero-wau-poster {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.hero-wau canvas { opacity: 0; }
+.hero-wau[data-loaded="true"] canvas { opacity: 1; }
+.hero-wau[data-loaded="true"] .hero-wau-poster { visibility: hidden; }
+
+@media (min-width: 1024px) {
+  .hero-wau {
+    top: 4%;
+    right: 4%;
+    bottom: auto;
+    width: 48%;
+    height: 68%;
+    max-height: 620px;
+  }
 }
 
 .hero-content {
+  position: relative;
+  z-index: 3;
   min-width: 0;
   padding: 48px 24px 36px;
   align-self: center;
@@ -345,17 +400,6 @@ a:focus-visible {
   color: var(--highlight);
 }
 
-.hero-image-container {
-  min-width: 0;
-  align-self: center;
-}
-
-.hero-image-container img {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
 @media (min-width: 640px) {
   .hero-content {
     padding: 56px 40px 40px;
@@ -371,6 +415,17 @@ a:focus-visible {
     grid-template-columns: minmax(0, 42fr) minmax(0, 58fr);
     /* Desktop navigation: 62px content + 18px padding on each side. */
     min-height: calc(100svh - 98px);
+    padding-bottom: 0;
+  }
+
+  .hero-section::before {
+    background:
+      linear-gradient(to bottom, #f7f3ea55, #f7f3ea00 25%),
+      linear-gradient(to right, #f7f3eafa 0%, #f7f3eaf0 28%, #f7f3eadb 40%, #f7f3ea70 57%, #f7f3ea12 76%, #f7f3ea00 100%);
+  }
+
+  .hero-background {
+    object-position: center 58%;
   }
 
   .hero-content {
@@ -385,10 +440,6 @@ a:focus-visible {
     font-size: clamp(14px, 1.1vw, 17px);
   }
 
-  .hero-image-container img {
-    /* Keep the full photograph visible; blend only its empty outer edge. */
-    mask-image: linear-gradient(to right, transparent, black 4%);
-  }
 }
 
 .site-nav-glass, .site-nav-logo { pointer-events: auto; }

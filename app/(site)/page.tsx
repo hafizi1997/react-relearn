@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { PageDecorations } from "../components/page-decorations";
+import { HeroWau } from "../components/hero-wau";
 
 export default function Home() {
   return (
@@ -8,6 +9,15 @@ export default function Home() {
       <PageDecorations />
       <main className="content-grid flex-1 bg-surface">
         <section className="hero-section" aria-labelledby="hero-heading">
+          <Image
+            className="hero-background"
+            src="/hero/gunung jerai.avif"
+            alt=""
+            fill
+            preload
+            sizes="100vw"
+          />
+          <HeroWau />
           <div className="hero-content">
             <p className="hero-label">Build &middot; Analyse &middot; Solve</p>
             <h1 id="hero-heading">
@@ -29,16 +39,6 @@ export default function Home() {
                 More about me
               </Link>
             </div>
-          </div>
-          <div className="hero-image-container">
-            <Image
-              src="/hero/hero.png"
-              alt="Laptop dashboard workspace with plant and book"
-              width={1672}
-              height={941}
-              preload
-              sizes="(min-width: 1024px) 58vw, 100vw"
-            />
           </div>
         </section>
       </main>
