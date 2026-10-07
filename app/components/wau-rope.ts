@@ -23,6 +23,11 @@ export class WauRope {
     });
   }
 
+  /** Feed or retrieve line as the kite travels, without resetting rope velocity. */
+  setLength(length: number) {
+    this.segmentLength = Math.max(0.1, length) / (this.count - 1);
+  }
+
   step(start: Vector3, end: Vector3, dt: number, wind: number) {
     for (let i = 1; i < this.count - 1; i++) {
       const p = this.points[i];

@@ -14,7 +14,14 @@ export function HeroWau() {
     let cleanup = () => {};
 
     async function mount() {
-      const [T, { GLTFLoader }, { WauRope }, { Line2 }, { LineGeometry }, { LineMaterial }] = await Promise.all([
+      const [
+        T,
+        { GLTFLoader },
+        { WauRope },
+        { Line2 },
+        { LineGeometry },
+        { LineMaterial },
+      ] = await Promise.all([
         import("three"),
         import("three/addons/loaders/GLTFLoader.js"),
         import("./wau-rope"),
@@ -52,8 +59,19 @@ export function HeroWau() {
       const ropePositions = new Float32Array(32 * 3);
       ropeGeometry.setPositions(ropePositions);
       // Screen-space widths remain visible on high-DPI and mobile displays.
-      const ropeMaterial = new LineMaterial({ color: 0x5d4730, linewidth: 2, worldUnits: false });
-      const outlineMaterial = new LineMaterial({ color: 0xfff5dc, linewidth: 3.5, worldUnits: false, transparent: true, opacity: 0.65, depthWrite: false });
+      const ropeMaterial = new LineMaterial({
+        color: 0x5d4730,
+        linewidth: 2,
+        worldUnits: false,
+      });
+      const outlineMaterial = new LineMaterial({
+        color: 0xfff5dc,
+        linewidth: 3.5,
+        worldUnits: false,
+        transparent: true,
+        opacity: 0.65,
+        depthWrite: false,
+      });
       const outline = new Line2(ropeGeometry, outlineMaterial);
       outline.frustumCulled = false;
       outline.renderOrder = 1;
@@ -64,7 +82,8 @@ export function HeroWau() {
       scene.add(ropeLine);
       // Two short cords form a bridle in front of the central bamboo spine.
       const bridleGeometry = new T.BufferGeometry().setFromPoints([
-        new T.Vector3(0, 1.15, 0.27), bridleLocal,
+        new T.Vector3(0, 1.15, 0.27),
+        bridleLocal,
         new T.Vector3(0, -0.35, 0.27),
       ]);
       const bridleMaterial = new T.LineBasicMaterial({ color: 0x5d4730 });
@@ -73,21 +92,61 @@ export function HeroWau() {
       let previousTime: number | undefined;
       let accumulator = 0;
       let baseHeight = 0;
+      let layoutRight = 4;
       const fixedStep = 1 / 120;
       const positionVelocity = new T.Vector3();
       const rotationVelocity = new T.Vector3();
-      const gust = (t: number) => Math.pow(Math.max(0, Math.sin(t * 0.43 + 0.4) * Math.sin(t * 0.19 + 1.2)), 3);
+      const gust = (t: number) =>
+        Math.pow(
+          Math.max(0, Math.sin(t * 0.43 + 0.4) * Math.sin(t * 0.19 + 1.2)),
+          3,
+        );
       const pose = (dt: number) => {
         const t = simulationTime;
+        // One launch per mount: enter from beyond the right edge, then settle at B.
+        // Reduced-motion users see the final position immediately.
+        const progress = motion.matches ? 1 : Math.min(1, t / 3);
+        const u = progress * progress * (3 - 2 * progress);
+        // Include the kite's half-span so the entire object starts out of view.
+        const startX = camera.right + 2.2;
+        const endX = layoutRight * 0.14;
+        const pathX =
+          (1 - u) * (1 - u) * startX +
+          2 * (1 - u) * u * layoutRight * 0.65 +
+          u * u * endX;
+        const pathY = T.MathUtils.lerp(-camera.top * 0.25, baseHeight, u);
+        pivot.scale.setScalar(T.MathUtils.lerp(0.48, 0.85, u));
         const g = gust(t);
-        const wind = Math.sin(t * 0.61) * 0.55 + Math.sin(t * 1.13 + 1) * 0.2 + g;
-        const targets = [wind * 0.18, baseHeight + g * 0.18 + Math.sin(t * 0.37) * 0.045, 0];
-        const angles = [-0.1 + g * 0.055, -0.16 + wind * 0.08, 0.22 - wind * 0.07];
+        const wind =
+          Math.sin(t * 0.61) * 0.55 + Math.sin(t * 1.13 + 1) * 0.2 + g;
+        // Wind affects the climb, then fades out at the destination for this stage.
+        const climbWind = Math.sin(Math.PI * u);
+        const targets = [
+          pathX + wind * 0.12 * climbWind,
+          pathY + g * 0.14 * climbWind,
+          -2,
+        ];
+        const angles = [
+          0.5 + g * 0.055 * climbWind,
+          T.MathUtils.degToRad(-20) + wind * 0.08 * climbWind,
+          0.42 - (wind * 0.07 + 0.16) * climbWind,
+        ];
         for (let axis = 0; axis < 3; axis++) {
           const key = (["x", "y", "z"] as const)[axis];
-          positionVelocity[key] += ((targets[axis] - pivot.position[key]) * 6 - positionVelocity[key] * 4.8) * dt;
+          if (dt === 0) {
+            pivot.position[key] = targets[axis];
+            pivot.rotation[key] = angles[axis];
+            continue;
+          }
+          positionVelocity[key] +=
+            ((targets[axis] - pivot.position[key]) * 6 -
+              positionVelocity[key] * 4.8) *
+            dt;
           pivot.position[key] += positionVelocity[key] * dt;
-          rotationVelocity[key] += ((angles[axis] - pivot.rotation[key]) * 9 - rotationVelocity[key] * 5.5) * dt;
+          rotationVelocity[key] +=
+            ((angles[axis] - pivot.rotation[key]) * 9 -
+              rotationVelocity[key] * 5.5) *
+            dt;
           pivot.rotation[key] += rotationVelocity[key] * dt;
         }
         pivot.updateMatrixWorld(true);
@@ -100,8 +159,9 @@ export function HeroWau() {
         positionVelocity.set(0, 0, 0);
         rotationVelocity.set(0, 0, 0);
         pose(0);
-        rope.reset(attachment, anchor, attachment.distanceTo(anchor) + 0.28);
-        for (let i = 0; i < 180; i++) rope.step(attachment, anchor, fixedStep, 0.2);
+        rope.reset(attachment, anchor, attachment.distanceTo(anchor) + 0.16);
+        for (let i = 0; i < 180; i++)
+          rope.step(attachment, anchor, fixedStep, 0.2);
       };
       const disposeModel = (group: THREE.Group) => {
         const materials = new Set<THREE.Material>();
@@ -109,7 +169,9 @@ export function HeroWau() {
         group.traverse((object) => {
           if (!(object instanceof T.Mesh)) return;
           object.geometry.dispose();
-          for (const material of Array.isArray(object.material) ? object.material : [object.material]) {
+          for (const material of Array.isArray(object.material)
+            ? object.material
+            : [object.material]) {
             materials.add(material);
             for (const value of Object.values(material)) {
               if (value instanceof T.Texture) textures.add(value);
@@ -121,7 +183,10 @@ export function HeroWau() {
       };
       const draw = () => {
         rope.points.forEach((point, i) => point.toArray(ropePositions, i * 3));
-        const segments = (ropeGeometry.attributes.instanceStart as THREE.InterleavedBufferAttribute).data;
+        const segments = (
+          ropeGeometry.attributes
+            .instanceStart as THREE.InterleavedBufferAttribute
+        ).data;
         const positions = segments.array;
         for (let i = 0; i < 31; i++) {
           for (let axis = 0; axis < 3; axis++) {
@@ -133,11 +198,13 @@ export function HeroWau() {
         renderer.render(scene, camera);
       };
       const tick = (time: number) => {
-        if (previousTime !== undefined) accumulator += Math.min((time - previousTime) / 1000, 0.05);
+        if (previousTime !== undefined)
+          accumulator += Math.min((time - previousTime) / 1000, 0.05);
         previousTime = time;
         while (accumulator >= fixedStep) {
           simulationTime += fixedStep;
           const wind = pose(fixedStep);
+          rope.setLength(attachment.distanceTo(anchor) + 0.16);
           rope.step(attachment, anchor, fixedStep, wind * 0.6);
           accumulator -= fixedStep;
         }
@@ -149,8 +216,10 @@ export function HeroWau() {
         previousTime = undefined;
         accumulator = 0;
         if (!model || disposed) return;
+        if (motion.matches) settleRope();
         draw();
-        if (visible && !document.hidden && !motion.matches) frame = requestAnimationFrame(tick);
+        if (visible && !document.hidden && !motion.matches)
+          frame = requestAnimationFrame(tick);
       };
       const resize = () => {
         const hostBounds = host.getBoundingClientRect();
@@ -158,29 +227,41 @@ export function HeroWau() {
         if (!width || !height) return;
         const aspect = width / height;
         const halfHeight = Math.max(3.8, 3.7 / aspect);
-        camera.left = -halfHeight * aspect;
-        camera.right = halfHeight * aspect;
+        // Extend only the drawing surface, keeping the original layout and scale.
+        const heroRight =
+          host.parentElement?.getBoundingClientRect().right ?? hostBounds.right;
+        const renderWidth = width + Math.max(0, heroRight - hostBounds.right);
+        layoutRight = halfHeight * aspect;
+        camera.left = -layoutRight;
+        camera.right =
+          layoutRight + (renderWidth - width) * ((2 * halfHeight) / height);
         camera.top = halfHeight;
         camera.bottom = -halfHeight;
         camera.updateProjectionMatrix();
-        baseHeight = halfHeight * 0.3;
+        // Higher in the sky, with clearance for the upper tip at narrow sizes.
+        baseHeight = Math.min(halfHeight * 0.48, halfHeight - 2);
         const handBounds = handRef.current?.getBoundingClientRect();
         if (handBounds) {
           // Pinch position in the uncropped source image (1222 × 1287).
           const pinchX = handBounds.left + handBounds.width * 0.695;
           const pinchY = handBounds.top + handBounds.height * 0.232;
-          const u = (pinchX - hostBounds.left) / width;
+          const u = (pinchX - hostBounds.left) / renderWidth;
           const v = (pinchY - hostBounds.top) / height;
-          anchor.set(camera.left + u * (camera.right - camera.left), camera.top - v * (camera.top - camera.bottom), 0.5);
+          anchor.set(
+            camera.left + u * (camera.right - camera.left),
+            camera.top - v * (camera.top - camera.bottom),
+            0.5,
+          );
         }
         settleRope();
-        renderer.setSize(width, height);
-        ropeMaterial.resolution.set(width, height);
-        outlineMaterial.resolution.set(width, height);
+        renderer.setSize(renderWidth, height);
+        ropeMaterial.resolution.set(renderWidth, height);
+        outlineMaterial.resolution.set(renderWidth, height);
         draw();
       };
       const resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(host);
+      if (host.parentElement) resizeObserver.observe(host.parentElement);
       if (handRef.current) resizeObserver.observe(handRef.current);
       const observer = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
@@ -202,7 +283,10 @@ export function HeroWau() {
         resizeObserver.disconnect();
         motion.removeEventListener("change", syncMotion);
         document.removeEventListener("visibilitychange", syncMotion);
-        renderer.domElement.removeEventListener("webglcontextlost", contextLost);
+        renderer.domElement.removeEventListener(
+          "webglcontextlost",
+          contextLost,
+        );
         if (model) disposeModel(model);
         ropeGeometry.dispose();
         bridleGeometry.dispose();
@@ -215,9 +299,14 @@ export function HeroWau() {
       };
       try {
         const gltf = await new GLTFLoader().loadAsync("/models/wau-bulan.glb");
-        if (disposed) { disposeModel(gltf.scene); return; }
+        if (disposed) {
+          disposeModel(gltf.scene);
+          return;
+        }
         model = gltf.scene;
-        const center = new T.Box3().setFromObject(model).getCenter(new T.Vector3());
+        const center = new T.Box3()
+          .setFromObject(model)
+          .getCenter(new T.Vector3());
         model.position.sub(center);
         pivot.add(model);
         resize();
@@ -229,17 +318,33 @@ export function HeroWau() {
     }
 
     void mount().catch(() => cleanup());
-    return () => { disposed = true; cleanup(); };
+    return () => {
+      disposed = true;
+      cleanup();
+    };
   }, []);
 
   return (
     <div className="hero-wau" ref={hostRef} aria-hidden="true">
       {/* A render of the same model stays visible until WebGL is ready. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img className="hero-wau-poster" src="/hero/wau-bulan-flight.webp" alt="" width={1200} height={880} />
+      <img
+        className="hero-wau-poster"
+        src="/hero/wau-bulan-flight.webp"
+        alt=""
+        width={1200}
+        height={880}
+      />
       {/* The grip is measured in CSS pixels and mapped into the rope's camera. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img ref={handRef} className="hero-wau-hand" src="/hero/left-hand.webp" alt="" width={1222} height={1287} />
+      <img
+        ref={handRef}
+        className="hero-wau-hand"
+        src="/hero/left-hand.webp"
+        alt=""
+        width={1222}
+        height={1287}
+      />
     </div>
   );
 }
