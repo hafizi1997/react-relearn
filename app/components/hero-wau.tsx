@@ -13,9 +13,13 @@ export function HeroWau() {
     let cleanup = () => {};
 
     async function mount() {
-      const [T, { GLTFLoader }] = await Promise.all([
+      const [T, { GLTFLoader }, { WauRope }, { Line2 }, { LineGeometry }, { LineMaterial }] = await Promise.all([
         import("three"),
         import("three/addons/loaders/GLTFLoader.js"),
+        import("./wau-rope"),
+        import("three/addons/lines/Line2.js"),
+        import("three/addons/lines/LineGeometry.js"),
+        import("three/addons/lines/LineMaterial.js"),
       ]);
       if (disposed || !host) return;
       const renderer = new T.WebGLRenderer({ alpha: true, antialias: true });
@@ -39,6 +43,65 @@ export function HeroWau() {
       let visible = true;
       let frame = 0;
       const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
+      const rope = new WauRope();
+      const anchor = new T.Vector3();
+      const attachment = new T.Vector3();
+      const bridleLocal = new T.Vector3(0, 0.05, 0.48);
+      const ropeGeometry = new LineGeometry();
+      const ropePositions = new Float32Array(32 * 3);
+      ropeGeometry.setPositions(ropePositions);
+      // Screen-space widths remain visible on high-DPI and mobile displays.
+      const ropeMaterial = new LineMaterial({ color: 0x5d4730, linewidth: 2, worldUnits: false });
+      const outlineMaterial = new LineMaterial({ color: 0xfff5dc, linewidth: 3.5, worldUnits: false, transparent: true, opacity: 0.65, depthWrite: false });
+      const outline = new Line2(ropeGeometry, outlineMaterial);
+      outline.frustumCulled = false;
+      outline.renderOrder = 1;
+      scene.add(outline);
+      const ropeLine = new Line2(ropeGeometry, ropeMaterial);
+      ropeLine.renderOrder = 2;
+      ropeLine.frustumCulled = false;
+      scene.add(ropeLine);
+      // Two short cords form a bridle in front of the central bamboo spine.
+      const bridleGeometry = new T.BufferGeometry().setFromPoints([
+        new T.Vector3(0, 1.15, 0.27), bridleLocal,
+        new T.Vector3(0, -0.35, 0.27),
+      ]);
+      const bridleMaterial = new T.LineBasicMaterial({ color: 0x5d4730 });
+      pivot.add(new T.Line(bridleGeometry, bridleMaterial));
+      let simulationTime = 0;
+      let previousTime: number | undefined;
+      let accumulator = 0;
+      let baseHeight = 0;
+      const fixedStep = 1 / 120;
+      const positionVelocity = new T.Vector3();
+      const rotationVelocity = new T.Vector3();
+      const gust = (t: number) => Math.pow(Math.max(0, Math.sin(t * 0.43 + 0.4) * Math.sin(t * 0.19 + 1.2)), 3);
+      const pose = (dt: number) => {
+        const t = simulationTime;
+        const g = gust(t);
+        const wind = Math.sin(t * 0.61) * 0.55 + Math.sin(t * 1.13 + 1) * 0.2 + g;
+        const targets = [wind * 0.18, baseHeight + g * 0.18 + Math.sin(t * 0.37) * 0.045, 0];
+        const angles = [-0.1 + g * 0.055, -0.16 + wind * 0.08, 0.22 - wind * 0.07];
+        for (let axis = 0; axis < 3; axis++) {
+          const key = (["x", "y", "z"] as const)[axis];
+          positionVelocity[key] += ((targets[axis] - pivot.position[key]) * 6 - positionVelocity[key] * 4.8) * dt;
+          pivot.position[key] += positionVelocity[key] * dt;
+          rotationVelocity[key] += ((angles[axis] - pivot.rotation[key]) * 9 - rotationVelocity[key] * 5.5) * dt;
+          pivot.rotation[key] += rotationVelocity[key] * dt;
+        }
+        pivot.updateMatrixWorld(true);
+        attachment.copy(bridleLocal).applyMatrix4(pivot.matrixWorld);
+        return wind;
+      };
+      const settleRope = () => {
+        pivot.position.set(0, baseHeight, 0);
+        pivot.rotation.set(-0.1, -0.16, 0.22);
+        positionVelocity.set(0, 0, 0);
+        rotationVelocity.set(0, 0, 0);
+        pose(0);
+        rope.reset(attachment, anchor, attachment.distanceTo(anchor) + 0.28);
+        for (let i = 0; i < 180; i++) rope.step(attachment, anchor, fixedStep, 0.2);
+      };
       const disposeModel = (group: THREE.Group) => {
         const materials = new Set<THREE.Material>();
         const textures = new Set<THREE.Texture>();
@@ -55,18 +118,35 @@ export function HeroWau() {
         materials.forEach((m) => m.dispose());
         textures.forEach((t) => t.dispose());
       };
-      const draw = (time = 0) => {
-        const t = motion.matches ? 0 : time / 1000;
-        pivot.rotation.set(-0.08 + Math.sin(t * 0.45) * 0.025, -0.17 + Math.sin(t * 0.32) * 0.07, 0.22 + Math.sin(t * 0.5) * 0.025);
-        pivot.position.y = Math.sin(t * 0.65) * 0.065;
+      const draw = () => {
+        rope.points.forEach((point, i) => point.toArray(ropePositions, i * 3));
+        const segments = (ropeGeometry.attributes.instanceStart as THREE.InterleavedBufferAttribute).data;
+        const positions = segments.array;
+        for (let i = 0; i < 31; i++) {
+          for (let axis = 0; axis < 3; axis++) {
+            positions[i * 6 + axis] = ropePositions[i * 3 + axis];
+            positions[i * 6 + 3 + axis] = ropePositions[(i + 1) * 3 + axis];
+          }
+        }
+        segments.needsUpdate = true;
         renderer.render(scene, camera);
       };
       const tick = (time: number) => {
-        draw(time);
+        if (previousTime !== undefined) accumulator += Math.min((time - previousTime) / 1000, 0.05);
+        previousTime = time;
+        while (accumulator >= fixedStep) {
+          simulationTime += fixedStep;
+          const wind = pose(fixedStep);
+          rope.step(attachment, anchor, fixedStep, wind * 0.6);
+          accumulator -= fixedStep;
+        }
+        draw();
         frame = requestAnimationFrame(tick);
       };
       const syncMotion = () => {
         cancelAnimationFrame(frame);
+        previousTime = undefined;
+        accumulator = 0;
         if (!model || disposed) return;
         draw();
         if (visible && !document.hidden && !motion.matches) frame = requestAnimationFrame(tick);
@@ -75,13 +155,18 @@ export function HeroWau() {
         const { width, height } = host.getBoundingClientRect();
         if (!width || !height) return;
         const aspect = width / height;
-        const halfHeight = Math.max(2.65, 3.7 / aspect);
+        const halfHeight = Math.max(3.8, 3.7 / aspect);
         camera.left = -halfHeight * aspect;
         camera.right = halfHeight * aspect;
         camera.top = halfHeight;
         camera.bottom = -halfHeight;
         camera.updateProjectionMatrix();
+        baseHeight = halfHeight * 0.3;
+        anchor.set(-halfHeight * aspect * 0.22, -halfHeight * 0.88, 0.5);
+        settleRope();
         renderer.setSize(width, height);
+        ropeMaterial.resolution.set(width, height);
+        outlineMaterial.resolution.set(width, height);
         draw();
       };
       const resizeObserver = new ResizeObserver(resize);
@@ -108,6 +193,11 @@ export function HeroWau() {
         document.removeEventListener("visibilitychange", syncMotion);
         renderer.domElement.removeEventListener("webglcontextlost", contextLost);
         if (model) disposeModel(model);
+        ropeGeometry.dispose();
+        bridleGeometry.dispose();
+        ropeMaterial.dispose();
+        outlineMaterial.dispose();
+        bridleMaterial.dispose();
         renderer.dispose();
         renderer.domElement.remove();
         delete host.dataset.loaded;

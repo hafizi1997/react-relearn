@@ -260,7 +260,7 @@ a:focus-visible {
   background: var(--bg);
   color: var(--text-primary);
   min-height: 720px;
-  padding-bottom: 200px;
+  padding-bottom: 280px;
 }
 
 .hero-section::before {
@@ -284,7 +284,7 @@ a:focus-visible {
   right: 4%;
   bottom: 10px;
   width: min(72%, 380px);
-  height: 210px;
+  height: 280px;
   pointer-events: none;
 }
 
@@ -308,8 +308,8 @@ a:focus-visible {
     right: 4%;
     bottom: auto;
     width: 48%;
-    height: 68%;
-    max-height: 620px;
+    height: 94%;
+    max-height: 900px;
   }
 }
 
