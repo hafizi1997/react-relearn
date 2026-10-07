@@ -5,6 +5,7 @@ import type * as THREE from "three";
 
 export function HeroWau() {
   const hostRef = useRef<HTMLDivElement>(null);
+  const handRef = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -152,7 +153,8 @@ export function HeroWau() {
         if (visible && !document.hidden && !motion.matches) frame = requestAnimationFrame(tick);
       };
       const resize = () => {
-        const { width, height } = host.getBoundingClientRect();
+        const hostBounds = host.getBoundingClientRect();
+        const { width, height } = hostBounds;
         if (!width || !height) return;
         const aspect = width / height;
         const halfHeight = Math.max(3.8, 3.7 / aspect);
@@ -162,7 +164,15 @@ export function HeroWau() {
         camera.bottom = -halfHeight;
         camera.updateProjectionMatrix();
         baseHeight = halfHeight * 0.3;
-        anchor.set(-halfHeight * aspect * 0.22, -halfHeight * 0.88, 0.5);
+        const handBounds = handRef.current?.getBoundingClientRect();
+        if (handBounds) {
+          // Pinch position in the uncropped source image (1222 × 1287).
+          const pinchX = handBounds.left + handBounds.width * 0.695;
+          const pinchY = handBounds.top + handBounds.height * 0.232;
+          const u = (pinchX - hostBounds.left) / width;
+          const v = (pinchY - hostBounds.top) / height;
+          anchor.set(camera.left + u * (camera.right - camera.left), camera.top - v * (camera.top - camera.bottom), 0.5);
+        }
         settleRope();
         renderer.setSize(width, height);
         ropeMaterial.resolution.set(width, height);
@@ -171,6 +181,7 @@ export function HeroWau() {
       };
       const resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(host);
+      if (handRef.current) resizeObserver.observe(handRef.current);
       const observer = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
         syncMotion();
@@ -226,6 +237,9 @@ export function HeroWau() {
       {/* A render of the same model stays visible until WebGL is ready. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img className="hero-wau-poster" src="/hero/wau-bulan-flight.webp" alt="" width={1200} height={880} />
+      {/* The grip is measured in CSS pixels and mapped into the rope's camera. */}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img ref={handRef} className="hero-wau-hand" src="/hero/left-hand.webp" alt="" width={1222} height={1287} />
     </div>
   );
 }
