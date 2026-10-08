@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { PageDecorations } from "../components/page-decorations";
 import { HeroWau } from "../components/hero-wau";
 
@@ -7,7 +8,7 @@ export default function Home() {
     <div className="page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans">
       <PageDecorations />
       <main className="content-grid flex-1 bg-surface">
-        <section className="hero-section" aria-label="Wau flying over Gunung Jerai">
+        <section className="hero-section" aria-labelledby="hero-heading">
           <Image
             className="hero-background"
             src="/hero/jerai-afternoon.webp"
@@ -17,6 +18,18 @@ export default function Home() {
             sizes="(max-width: 1023px) 1400px, 100vw"
           />
           <HeroWau />
+          <div className="hero-content">
+            <h1 id="hero-heading">
+              <span className="hero-heading-line">Rooted in culture.</span>
+              <span className="hero-heading-line hero-heading-offset">Driven by <em>curiosity.</em></span>
+            </h1>
+            <div className="hero-actions">
+              <Link className="hero-primary-link" href="/experience">
+                View my work <span aria-hidden="true">&rarr;</span>
+              </Link>
+              <Link className="hero-secondary-link" href="/concept#the-big-idea">About me</Link>
+            </div>
+          </div>
         </section>
       </main>
     </div>

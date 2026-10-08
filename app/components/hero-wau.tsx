@@ -228,6 +228,8 @@ export function HeroWau() {
         renderer.render(scene, camera);
       };
       const tick = (time: number) => {
+        // A queued frame may survive a preference or visibility change.
+        if (disposed || motion.matches || !visible || document.hidden) return;
         if (previousTime !== undefined)
           accumulator += Math.min((time - previousTime) / 1000, 0.05);
         previousTime = time;
