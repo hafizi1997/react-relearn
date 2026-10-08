@@ -330,31 +330,18 @@ a:focus-visible {
   aspect-ratio: 1;
   transform: translateY(25%);
   user-select: none;
-  filter: sepia(.09) saturate(.86) brightness(1.04);
 }
 
-.hero-wau-person-body,
-.hero-wau-person-arm img {
+.hero-wau-person-body {
   display: block;
   width: 100%;
   height: auto;
 }
 
-.hero-wau-person-arm {
-  position: absolute;
-  left: 43.5%;
-  top: 9%;
-  width: 95%;
-  aspect-ratio: 1;
-  /* Shoulder pivot; a future input controller can rotate this layer. */
-  transform-origin: 20% 62%;
-  transform: rotate(var(--wau-arm-angle, 0deg));
-}
-
 .hero-wau-person-grip {
   position: absolute;
-  left: 92%;
-  top: 13.3%;
+  left: 92.4%;
+  top: 16.1%;
   width: 0;
   height: 0;
 }
@@ -369,7 +356,7 @@ a:focus-visible {
   }
 
   .hero-wau-person {
-    left: -115%;
+    left: -100%;
     width: 54%;
     max-width: 540px;
   }
