@@ -2,10 +2,38 @@
 
 import { useEffect, useRef } from "react";
 import type * as THREE from "three";
+import { HeroWauPerson } from "./hero-wau-person";
 
 export function HeroWau() {
   const hostRef = useRef<HTMLDivElement>(null);
-  const handRef = useRef<HTMLImageElement>(null);
+  const gripRef = useRef<HTMLSpanElement>(null);
+  const posterRef = useRef<HTMLImageElement>(null);
+  const fallbackRopeRef = useRef<SVGPathElement>(null);
+
+  useEffect(() => {
+    const host = hostRef.current;
+    const grip = gripRef.current;
+    const path = fallbackRopeRef.current;
+    const poster = posterRef.current;
+    if (!host || !grip || !path || !poster) return;
+    const resize = () => {
+      const bounds = host.getBoundingClientRect();
+      const hand = grip.getBoundingClientRect();
+      const kite = poster.getBoundingClientRect();
+      if (!bounds.width || !bounds.height) return;
+      const x = ((hand.left - bounds.left) / bounds.width) * 100;
+      const y = ((hand.top - bounds.top) / bounds.height) * 100;
+      const kiteX = ((kite.left + kite.width * 0.5 - bounds.left) / bounds.width) * 100;
+      const kiteY = ((kite.top + kite.height * 0.57 - bounds.top) / bounds.height) * 100;
+      path.setAttribute("d", `M ${kiteX} ${kiteY} Q ${(kiteX + x) / 2 + 2} ${(kiteY + y) / 2} ${x} ${y}`);
+    };
+    const observer = new ResizeObserver(resize);
+    observer.observe(host);
+    observer.observe(poster);
+    if (grip.parentElement) observer.observe(grip.parentElement);
+    resize();
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const host = hostRef.current;
@@ -41,7 +69,7 @@ export function HeroWau() {
       const pivot = new T.Group();
       scene.add(pivot);
       scene.add(new T.HemisphereLight(0xfff8eb, 0x66754e, 2.2));
-      const key = new T.DirectionalLight(0xffecd2, 3);
+      const key = new T.DirectionalLight(0xffe2b5, 3);
       key.position.set(-3, 5, 7);
       scene.add(key);
       const fill = new T.DirectionalLight(0xe6efff, 1.4);
@@ -61,15 +89,15 @@ export function HeroWau() {
       // Screen-space widths remain visible on high-DPI and mobile displays.
       const ropeMaterial = new LineMaterial({
         color: 0x5d4730,
-        linewidth: 2,
+        linewidth: 1.1,
         worldUnits: false,
       });
       const outlineMaterial = new LineMaterial({
         color: 0xfff5dc,
-        linewidth: 3.5,
+        linewidth: 2,
         worldUnits: false,
         transparent: true,
-        opacity: 0.65,
+        opacity: 0.38,
         depthWrite: false,
       });
       const outline = new Line2(ropeGeometry, outlineMaterial);
@@ -119,17 +147,19 @@ export function HeroWau() {
         const g = gust(t);
         const wind =
           Math.sin(t * 0.61) * 0.55 + Math.sin(t * 1.13 + 1) * 0.2 + g;
-        // Wind affects the climb, then fades out at the destination for this stage.
+        // Ease from launch into a small continuous breeze, without moving
+        // anything for visitors who prefer reduced motion.
         const climbWind = Math.sin(Math.PI * u);
+        const breeze = motion.matches ? 0 : u * u;
         const targets = [
-          pathX + wind * 0.12 * climbWind,
-          pathY + g * 0.14 * climbWind,
+          pathX + wind * (0.12 * climbWind + 0.13 * breeze),
+          pathY + g * 0.14 * climbWind + Math.sin(t * 0.48) * 0.055 * breeze,
           -2,
         ];
         const angles = [
-          0.5 + g * 0.055 * climbWind,
-          T.MathUtils.degToRad(-20) + wind * 0.08 * climbWind,
-          0.42 - (wind * 0.07 + 0.16) * climbWind,
+          0.5 + g * 0.055 * climbWind + Math.sin(t * 0.53) * 0.018 * breeze,
+          T.MathUtils.degToRad(-20) + wind * (0.08 * climbWind + 0.035 * breeze),
+          0.42 - (wind * 0.07 + 0.16) * climbWind + Math.sin(t * 0.61) * 0.025 * breeze,
         ];
         for (let axis = 0; axis < 3; axis++) {
           const key = (["x", "y", "z"] as const)[axis];
@@ -159,7 +189,7 @@ export function HeroWau() {
         positionVelocity.set(0, 0, 0);
         rotationVelocity.set(0, 0, 0);
         pose(0);
-        rope.reset(attachment, anchor, attachment.distanceTo(anchor) + 0.16);
+        rope.reset(attachment, anchor, attachment.distanceTo(anchor) + 0.055);
         for (let i = 0; i < 180; i++)
           rope.step(attachment, anchor, fixedStep, 0.2);
       };
@@ -204,7 +234,7 @@ export function HeroWau() {
         while (accumulator >= fixedStep) {
           simulationTime += fixedStep;
           const wind = pose(fixedStep);
-          rope.setLength(attachment.distanceTo(anchor) + 0.16);
+          rope.setLength(attachment.distanceTo(anchor) + 0.055);
           rope.step(attachment, anchor, fixedStep, wind * 0.6);
           accumulator -= fixedStep;
         }
@@ -227,25 +257,29 @@ export function HeroWau() {
         if (!width || !height) return;
         const aspect = width / height;
         const halfHeight = Math.max(3.8, 3.7 / aspect);
-        // Extend only the drawing surface, keeping the original layout and scale.
-        const heroRight =
-          host.parentElement?.getBoundingClientRect().right ?? hostBounds.right;
-        const renderWidth = width + Math.max(0, heroRight - hostBounds.right);
+        // Cover the whole hero so the string can reach the left-corner person,
+        // while preserving the kite's original camera scale and position.
+        const heroBounds = host.parentElement?.getBoundingClientRect() ?? hostBounds;
+        const leftExtension = Math.max(0, hostBounds.left - heroBounds.left);
+        const rightExtension = Math.max(0, heroBounds.right - hostBounds.right);
+        const renderWidth = width + leftExtension + rightExtension;
         layoutRight = halfHeight * aspect;
-        camera.left = -layoutRight;
+        camera.left = -layoutRight - leftExtension * ((2 * halfHeight) / height);
         camera.right =
-          layoutRight + (renderWidth - width) * ((2 * halfHeight) / height);
+          layoutRight + rightExtension * ((2 * halfHeight) / height);
+        renderer.domElement.style.left = `${-leftExtension}px`;
         camera.top = halfHeight;
         camera.bottom = -halfHeight;
         camera.updateProjectionMatrix();
         // Higher in the sky, with clearance for the upper tip at narrow sizes.
         baseHeight = Math.min(halfHeight * 0.48, halfHeight - 2);
-        const handBounds = handRef.current?.getBoundingClientRect();
+        const handBounds = gripRef.current?.getBoundingClientRect();
         if (handBounds) {
-          // Pinch position in the uncropped source image (1222 × 1287).
-          const pinchX = handBounds.left + handBounds.width * 0.695;
-          const pinchY = handBounds.top + handBounds.height * 0.232;
-          const u = (pinchX - hostBounds.left) / renderWidth;
+          // A marker inside the arm layer keeps the attachment independent
+          // of the body crop and provides the anchor for future hand dragging.
+          const pinchX = handBounds.left;
+          const pinchY = handBounds.top;
+          const u = (pinchX - hostBounds.left + leftExtension) / renderWidth;
           const v = (pinchY - hostBounds.top) / height;
           anchor.set(
             camera.left + u * (camera.right - camera.left),
@@ -262,7 +296,8 @@ export function HeroWau() {
       const resizeObserver = new ResizeObserver(resize);
       resizeObserver.observe(host);
       if (host.parentElement) resizeObserver.observe(host.parentElement);
-      if (handRef.current) resizeObserver.observe(handRef.current);
+      if (gripRef.current?.parentElement)
+        resizeObserver.observe(gripRef.current.parentElement);
       const observer = new IntersectionObserver(([entry]) => {
         visible = entry.isIntersecting;
         syncMotion();
@@ -329,22 +364,17 @@ export function HeroWau() {
       {/* A render of the same model stays visible until WebGL is ready. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
+        ref={posterRef}
         className="hero-wau-poster"
         src="/hero/wau-bulan-flight.webp"
         alt=""
         width={1200}
         height={880}
       />
-      {/* The grip is measured in CSS pixels and mapped into the rope's camera. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
-        ref={handRef}
-        className="hero-wau-hand"
-        src="/hero/left-hand.webp"
-        alt=""
-        width={1222}
-        height={1287}
-      />
+      <svg className="hero-wau-fallback-rope" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <path ref={fallbackRopeRef} fill="none" stroke="#806744" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />
+      </svg>
+      <HeroWauPerson gripRef={gripRef} />
     </div>
   );
 }

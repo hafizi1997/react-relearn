@@ -53,6 +53,9 @@
   --rotate:-95deg;
 }
 
+:global(.hero-visual-page) .sprig { --opacity: .07; }
+:global(.hero-visual-page) .floralLeft { --opacity: .16; }
+
 /* 3 */
 .ornament {
   --img: url("/arts/Elegant%20Tan%20Lily%20Botanical%20Ornament.png");
