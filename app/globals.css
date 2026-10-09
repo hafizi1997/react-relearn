@@ -270,7 +270,7 @@ a:focus-visible {
   z-index: 1;
   pointer-events: none;
   background:
-    linear-gradient(to bottom, #f7f3eafa 0%, #f7f3eaeb 22%, #f7f3ea00 55%),
+    linear-gradient(to bottom, #f7f3eaf5 0%, #f7f3eadb 22%, #f7f3ea00 55%),
     linear-gradient(to right, #f7f3ea70, #f7f3ea00 55%);
 }
 
@@ -414,7 +414,7 @@ a:focus-visible {
   justify-content: center;
   gap: 18px;
   min-height: 44px;
-  padding: 12px 24px;
+  padding: 12px 30px;
   border-radius: 999px;
   background: #06454b;
   color: var(--button-text);
@@ -423,6 +423,25 @@ a:focus-visible {
 
 .hero-primary-link:hover {
   background: #0a5960;
+}
+
+.hero-primary-link > span {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+
+.hero-primary-link:hover > span,
+.hero-primary-link:focus-visible > span {
+  transform: translateX(3px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-primary-link,
+  .hero-secondary-link,
+  .hero-primary-link > span { transition: none; }
+
+  .hero-primary-link:hover > span,
+  .hero-primary-link:focus-visible > span { transform: none; }
 }
 
 .hero-secondary-link {
@@ -456,8 +475,8 @@ a:focus-visible {
 
   .hero-section::before {
     background:
-      radial-gradient(ellipse at 24% 25%, #f7f3eaf5 0%, #f7f3eadb 19%, #f7f3ea75 32%, #f7f3ea00 53%),
-      linear-gradient(to right, #f7f3eae8 0%, #f7f3ea99 14%, #f7f3ea40 30%, #f7f3ea0d 48%, #f7f3ea00 65%);
+      radial-gradient(ellipse at 24% 25%, #fff6e3e8 0%, #fff3d9c7 19%, #ffeac269 32%, #ffeac200 53%),
+      linear-gradient(to right, #fff3d9db 0%, #ffedc78c 14%, #ffe7b840 30%, #ffe7b80d 48%, #ffe7b800 65%);
   }
 
   .hero-background {

@@ -20,14 +20,14 @@ export default function Home() {
           <HeroWau />
           <div className="hero-content">
             <h1 id="hero-heading">
-              <span className="hero-heading-line">Rooted in culture.</span>
-              <span className="hero-heading-line hero-heading-offset">Driven by <em>curiosity.</em></span>
+              <span className="hero-heading-line">Built with purpose.</span>
+              <span className="hero-heading-line hero-heading-offset">Thoughtful by <em>design.</em></span>
             </h1>
             <div className="hero-actions">
               <Link className="hero-primary-link" href="/experience">
                 View my work <span aria-hidden="true">&rarr;</span>
               </Link>
-              <Link className="hero-secondary-link" href="/concept#the-big-idea">About me</Link>
+              <Link className="hero-secondary-link" href="/about">About me</Link>
             </div>
           </div>
         </section>

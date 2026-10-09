@@ -133,7 +133,7 @@ export function HeroWau() {
         const t = simulationTime;
         // One launch per mount: enter from beyond the right edge, then settle at B.
         // Reduced-motion users see the final position immediately.
-        const progress = motion.matches ? 1 : Math.min(1, t / 3);
+        const progress = motion.matches ? 1 : Math.min(1, t / 2.5);
         const u = progress * progress * (3 - 2 * progress);
         // Include the kite's half-span so the entire object starts out of view.
         const startX = camera.right + 2.2;
