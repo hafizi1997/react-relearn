@@ -2,18 +2,141 @@
   --section-spacing: 0px;
 }
 
+.nextSection {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: clamp(40px, 8vw, 140px);
+  min-height: 100svh;
+  padding: clamp(64px, 8vw, 128px) clamp(24px, 8vw, 144px);
+  background: var(--bg);
+}
+
+.workEyebrow {
+  margin: 0 0 24px;
+  color: #79643f;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+}
+
+.workIntro h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(42px, 4.5vw, 76px);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
+.workIntro h2 em { color: #075058; }
+
+.workDescription {
+  max-width: 370px;
+  margin: 24px 0 32px;
+  color: var(--text-secondary);
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+.workList { margin: 0; padding: 0; list-style: none; }
+.workList li {
+  display: flex;
+  align-items: baseline;
+  gap: 24px;
+  padding: clamp(24px, 3vw, 44px) 0;
+  border-top: 1px solid var(--border);
+}
+.workList li:last-child { border-bottom: 1px solid var(--border); }
+.workNumber { color: #79643f; font-size: 12px; font-variant-numeric: tabular-nums; }
+.workList h3 {
+  margin: 0 0 10px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(26px, 2.5vw, 40px);
+  font-weight: 400;
+  letter-spacing: -.025em;
+}
+.workList time { color: var(--text-secondary); font-size: 13px; }
+
+@media (max-width: 767px) {
+  .nextSection { grid-template-columns: minmax(0, 1fr); align-content: center; }
+}
+
 .tableSection {
+  --table-inset: clamp(24px, 6vw, 112px);
   position: relative;
   z-index: 3;
   isolation: isolate;
-  height: clamp(520px, 88svh, 1000px);
   overflow: hidden;
-  background: radial-gradient(ellipse at center, #f7f3ea, #e5dfd3);
+  background:
+    radial-gradient(ellipse at 74% 40%, #fffcf4 0%, #fffcf400 58%),
+    linear-gradient(125deg, #f7f3ea 15%, #ece5d8 100%);
+}
+
+.gameInvitation {
+  position: absolute;
+  top: clamp(64px, 12vh, 140px);
+  left: var(--table-inset);
+  width: 30%;
+  z-index: 1;
+  pointer-events: none;
+  text-align: left;
+}
+
+.gameInvitation::after {
+  content: "";
+  display: block;
+  width: clamp(72px, 8vw, 128px);
+  height: 1px;
+  margin-top: 28px;
+  background: linear-gradient(to right, #a58b52, #a58b5226);
+}
+
+.gameInvitation h2 {
+  width: fit-content;
+  margin: 0;
+  color: #292b26;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 3.7vw, 72px);
+  font-weight: 400;
+  line-height: 1.15;
+  letter-spacing: -.045em;
+}
+
+.gameInvitation h2 > span { display: block; }
+.headingAmpersand {
+  padding-left: .5em;
+  text-align: left;
+}
+
+.gameInvitation h2 em { color: #075058; }
+
+.tableStage {
+  position: relative;
+  height: clamp(580px, 88svh, 1000px);
 }
 
 .tableBackground {
   position: absolute;
-  inset: 0;
+  inset: 7% 2% 4% 33%;
+  isolation: isolate;
+}
+
+.tableBackground::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 14%;
+  right: 14%;
+  bottom: 5%;
+  height: 13%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, #59422d30, #59422d00 70%);
+  filter: blur(14px);
+  pointer-events: none;
 }
 
 .tableCanvas, .tableCanvas canvas {
@@ -22,8 +145,18 @@
   height: 100%;
 }
 
-@media (max-width: 639px) {
-  .tableSection {
-    height: clamp(360px, 110vw, 660px);
+@media (max-width: 767px) {
+  .gameInvitation {
+    top: 36px;
+    width: calc(100% - 2 * var(--table-inset));
   }
+
+  .gameInvitation h2 { font-size: clamp(32px, 5.5vw, 42px); }
+  .gameInvitation::after { margin-top: 18px; }
+
+  .tableStage {
+    height: clamp(560px, calc(88vw + 200px), 850px);
+  }
+
+  .tableBackground { inset: 216px 12px 24px; }
 }

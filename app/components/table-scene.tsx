@@ -30,8 +30,8 @@ export function TableScene() {
       camera.position.set(0, 1.6, 1.5);
       const target = new T.Vector3(0, 0.18, 0);
       camera.lookAt(target);
-      scene.add(new T.HemisphereLight(0xfff5e4, 0x72624e, 2));
-      const key = new T.DirectionalLight(0xffe6c6, 3);
+      scene.add(new T.HemisphereLight(0xfff8ef, 0x72624e, 1.6));
+      const key = new T.DirectionalLight(0xffefda, 2.4);
       key.position.set(-2, 4, 3); scene.add(key);
       const fill = new T.DirectionalLight(0xffffff, 1.2);
       fill.position.set(3, 2, -2); scene.add(fill);
@@ -70,7 +70,7 @@ export function TableScene() {
               for (const z of [bounds.min.z, bounds.max.z]) {
                 const corner = new T.Vector3(x, y, z)
                   .sub(target).applyQuaternion(inverseRotation);
-                distance = Math.max(distance, corner.z + 0.9 * Math.max(
+                distance = Math.max(distance, corner.z + 1.06 * Math.max(
                   Math.abs(corner.x) / (tangent * camera.aspect),
                   Math.abs(corner.y) / tangent,
                 ));
