@@ -2,12 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import { PageDecorations } from "../components/page-decorations";
 import { HeroWau } from "../components/hero-wau";
+import styles from "./home.module.css";
+import { TableScene } from "../components/table-scene";
 
 export default function Home() {
   return (
     <div className="page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans">
       <PageDecorations />
-      <main className="content-grid flex-1 bg-surface">
+      <main className={`${styles.homeContent} content-grid flex-1 bg-surface`}>
         <section className="hero-section" aria-labelledby="hero-heading">
           <Image
             className="hero-background"
@@ -30,6 +32,9 @@ export default function Home() {
               <Link className="hero-secondary-link" href="/about">About me</Link>
             </div>
           </div>
+        </section>
+        <section className={styles.tableSection} aria-label="Interactive 3D board-game table">
+          <TableScene />
         </section>
       </main>
     </div>

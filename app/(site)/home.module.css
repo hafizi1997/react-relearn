@@ -1,0 +1,29 @@
+.homeContent {
+  --section-spacing: 0px;
+}
+
+.tableSection {
+  position: relative;
+  z-index: 3;
+  isolation: isolate;
+  height: clamp(520px, 88svh, 1000px);
+  overflow: hidden;
+  background: radial-gradient(ellipse at center, #f7f3ea, #e5dfd3);
+}
+
+.tableBackground {
+  position: absolute;
+  inset: 0;
+}
+
+.tableCanvas, .tableCanvas canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@media (max-width: 639px) {
+  .tableSection {
+    height: clamp(360px, 110vw, 660px);
+  }
+}
