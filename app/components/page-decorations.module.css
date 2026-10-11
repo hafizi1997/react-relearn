@@ -96,3 +96,51 @@
 @media (max-width: 1023px) {
   .tile { --scale: .6; opacity: .6; }
 }
+
+/* Section arrangements follow their own scene, including its scroll fade.
+   Relative widths keep the artwork at the edges on small screens. */
+.sectionFlowers .floralLeft {
+  --w: clamp(180px, 30vw, 480px);
+  --left: calc(clamp(180px, 30vw, 480px) * -.65);
+  --top: auto;
+  --bottom: -40px;
+  --opacity: .18;
+}
+
+.sectionFlowers .sprig {
+  --w: clamp(140px, 22vw, 340px);
+  --right: calc(clamp(140px, 22vw, 340px) * -.65);
+  --top: 8%;
+  --rotate: -20deg;
+  --opacity: .16;
+}
+
+.sectionFlowers[data-section="hero"] .floralLeft {
+  --top: 8%;
+  --bottom: auto;
+  --opacity: .12;
+}
+
+.sectionFlowers[data-section="hero"] .sprig {
+  --top: auto;
+  --bottom: 3%;
+  --opacity: .09;
+}
+
+.sectionFlowers[data-section="table"] .floralLeft {
+  --rotate: 20deg;
+}
+
+.sectionFlowers[data-section="work"] .floralLeft {
+  --rotate: -12deg;
+  --opacity: .22;
+}
+
+.sectionFlowers[data-section="work"] .sprig {
+  --top: 2%;
+  --opacity: .2;
+}
+
+@media (max-width: 767px) {
+  .sectionFlowers { opacity: .65; }
+}

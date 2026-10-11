@@ -1,0 +1,48 @@
+.transition {
+  position: relative;
+  background: var(--bg);
+}
+
+/* Without JavaScript or with reduced motion, keep both sections in normal flow. */
+@media (prefers-reduced-motion: no-preference) {
+  .transition[data-animated="true"]::after {
+    /* Keep the scroll distance inside the sticky containing block's content
+       box. Bottom padding lets the stage release before this space is passed. */
+    content: "";
+    display: block;
+    height: 100svh;
+  }
+
+  .transition[data-animated="true"] .stage {
+    position: sticky;
+    top: var(--scene-top, 0px);
+    height: var(--scene-height);
+    display: grid;
+    isolation: isolate;
+  }
+
+  .transition[data-animated="true"] .hero,
+  .transition[data-animated="true"] .table {
+    grid-area: 1 / 1;
+    min-width: 0;
+  }
+
+  .transition[data-animated="true"] .hero {
+    z-index: 2;
+    opacity: var(--hero-opacity, 1);
+    filter: blur(var(--hero-blur, 0px));
+  }
+
+  .transition[data-animated="true"] .hero > section {
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .transition[data-animated="true"] .table {
+    z-index: 1;
+    opacity: var(--table-opacity, 0);
+  }
+
+  .transition[data-blending="true"] .hero { will-change: filter, opacity; }
+  .transition[data-blending="true"] .table { will-change: opacity; }
+}

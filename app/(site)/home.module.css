@@ -5,6 +5,7 @@
 .nextSection {
   position: relative;
   z-index: 3;
+  isolation: isolate;
   display: grid;
   grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
   align-items: center;
@@ -61,6 +62,12 @@
 }
 .workList time { color: var(--text-secondary); font-size: 13px; }
 
+.workIntro,
+.workList {
+  position: relative;
+  z-index: 3;
+}
+
 @media (max-width: 767px) {
   .nextSection { grid-template-columns: minmax(0, 1fr); align-content: center; }
 }
@@ -81,7 +88,7 @@
   top: calc(clamp(64px, 12vh, 140px) + 48px);
   left: var(--table-inset);
   width: 30%;
-  z-index: 1;
+  z-index: 3;
   pointer-events: none;
   text-align: left;
 }
@@ -116,7 +123,8 @@
 
 .tableStage {
   position: relative;
-  height: 100svh;
+  z-index: 3;
+  height: var(--scene-height, 100svh);
 }
 
 .tableBackground {
@@ -155,4 +163,9 @@
   .gameInvitation::after { margin-top: 18px; }
 
   .tableBackground { inset: 216px 12px 24px; }
+}
+
+/* Clip decorations without creating a scroll container that breaks sticky scenes. */
+.homeShell:global(.page-shell) {
+  overflow: clip;
 }

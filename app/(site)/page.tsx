@@ -1,15 +1,16 @@
 import Image from "next/image";
 import Link from "next/link";
-import { PageDecorations } from "../components/page-decorations";
+import { SectionFlowers } from "../components/section-flowers";
 import { HeroWau } from "../components/hero-wau";
 import styles from "./home.module.css";
+import { HeroTransition } from "../components/hero-transition";
 import { TableScene } from "../components/table-scene";
 
 export default function Home() {
   return (
-    <div className="page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans">
-      <PageDecorations />
+    <div className={`${styles.homeShell} page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans`}>
       <main className={`${styles.homeContent} content-grid flex-1 bg-surface`}>
+        <HeroTransition hero={
         <section className="hero-section" aria-labelledby="hero-heading">
           <Image
             className="hero-background"
@@ -20,6 +21,7 @@ export default function Home() {
             sizes="(max-width: 1023px) 1400px, 100vw"
           />
           <HeroWau />
+          <SectionFlowers section="hero" />
           <div className="hero-content">
             <h1 id="hero-heading">
               <span className="hero-heading-line">Built with purpose.</span>
@@ -33,7 +35,9 @@ export default function Home() {
             </div>
           </div>
         </section>
+        } table={
         <section className={styles.tableSection} aria-labelledby="table-heading">
+          <SectionFlowers section="table" />
           <div className={styles.gameInvitation}>
             <h2 id="table-heading">
               <span>Take a seat</span>{" "}
@@ -45,7 +49,9 @@ export default function Home() {
             <TableScene />
           </div>
         </section>
+        } />
         <section className={styles.nextSection} aria-labelledby="work-heading">
+          <SectionFlowers section="work" />
           <div className={styles.workIntro}>
             <p className={styles.workEyebrow}>Selected work</p>
             <h2 id="work-heading">From curiosity<br />to <em>creation.</em></h2>
