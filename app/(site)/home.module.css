@@ -78,7 +78,7 @@
 
 .gameInvitation {
   position: absolute;
-  top: clamp(64px, 12vh, 140px);
+  top: calc(clamp(64px, 12vh, 140px) + 48px);
   left: var(--table-inset);
   width: 30%;
   z-index: 1;
@@ -116,7 +116,7 @@
 
 .tableStage {
   position: relative;
-  height: clamp(580px, 88svh, 1000px);
+  height: 100svh;
 }
 
 .tableBackground {
@@ -147,16 +147,12 @@
 
 @media (max-width: 767px) {
   .gameInvitation {
-    top: 36px;
+    top: 60px;
     width: calc(100% - 2 * var(--table-inset));
   }
 
   .gameInvitation h2 { font-size: clamp(32px, 5.5vw, 42px); }
   .gameInvitation::after { margin-top: 18px; }
-
-  .tableStage {
-    height: clamp(560px, calc(88vw + 200px), 850px);
-  }
 
   .tableBackground { inset: 216px 12px 24px; }
 }
