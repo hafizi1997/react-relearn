@@ -53,6 +53,13 @@ export default function Home() {
           </div>
         </section>
         } />
+        <section className={styles.videoSection} aria-labelledby="video-heading">
+          <div className={styles.videoPlaceholder}>
+            <p className={styles.videoEyebrow}>Featured film</p>
+            <h2 id="video-heading">Video coming soon</h2>
+            <span className={styles.videoPlayIcon} aria-hidden="true" />
+          </div>
+        </section>
         <section className={styles.nextSection} aria-labelledby="experience-heading">
           <h2 id="experience-heading" className={styles.experienceStatement}>
             <span>4 years of making</span>{" "}

@@ -2,6 +2,66 @@
   --section-spacing: 0px;
 }
 
+.videoSection {
+  position: relative;
+  z-index: 3;
+  display: grid;
+  min-height: 100svh;
+  place-items: center;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  padding: clamp(24px, 5vw, 80px);
+  background: #151814;
+}
+
+.videoPlaceholder {
+  position: relative;
+  display: grid;
+  width: min(100%, 1440px);
+  aspect-ratio: 16 / 9;
+  place-content: center;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid #f7f3ea24;
+  background:
+    radial-gradient(circle at 50% 45%, #a58b5229, transparent 34%),
+    linear-gradient(135deg, #252a23, #10120f);
+  color: #f7f3ea;
+  text-align: center;
+}
+
+.videoPlaceholder::before {
+  content: "";
+  position: absolute;
+  inset: 16px;
+  border: 1px solid #f7f3ea14;
+  pointer-events: none;
+}
+
+.videoEyebrow {
+  margin: 0 0 16px;
+  color: #d6af65;
+  font-size: clamp(11px, 1vw, 14px);
+  letter-spacing: .22em;
+  text-transform: uppercase;
+}
+
+.videoPlaceholder h2 {
+  margin: 0;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(36px, 6vw, 88px);
+  font-weight: 400;
+  letter-spacing: -.04em;
+}
+
+.videoPlayIcon {
+  width: 0;
+  height: 0;
+  margin-top: clamp(28px, 4vw, 48px);
+  border-block: 10px solid transparent;
+  border-left: 16px solid #d6af65;
+}
+
 .nextSection {
   position: relative;
   z-index: 3;
