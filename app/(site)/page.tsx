@@ -59,6 +59,12 @@ export default function Home() {
             <span>my apps</span>
           </h2>
         </section>
+        <section className={styles.projectsSection} aria-labelledby="projects-heading">
+          <div className={styles.projectsPlaceholder}>
+            <h2 id="projects-heading">Selected projects</h2>
+            <p>Project showcase coming soon.</p>
+          </div>
+        </section>
         <ContactSection />
       </main>
     </div>
