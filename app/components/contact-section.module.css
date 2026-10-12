@@ -1,0 +1,135 @@
+.section {
+  --city-position: center bottom;
+  isolation: isolate;
+  position: relative;
+  z-index: 3;
+  min-height: 100svh;
+  background:
+    linear-gradient(to top, #082f3dcc 0%, transparent 18%),
+    url("/contact/kuala-lumpur.png") var(--city-position) / cover no-repeat,
+    var(--bg);
+  color: var(--text-primary);
+}
+
+.futureBackground {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(to top, #082f3dcc 0%, transparent 18%),
+    url("/contact/kuala-lumpur-future.png") var(--city-position) / cover no-repeat;
+  --spotlight: radial-gradient(circle clamp(80px, 12vw, 190px) at var(--reveal-x, 50%) var(--reveal-y, 50%), #000 0%, #000 60%, transparent 100%);
+  -webkit-mask-image: var(--spotlight);
+  mask-image: var(--spotlight);
+  opacity: 0;
+  transition: opacity 240ms ease;
+}
+.section[data-reveal="true"] .futureBackground { opacity: 1; }
+
+.content {
+  z-index: 1;
+  position: relative;
+  min-height: max(640px, 100svh);
+}
+
+.heading {
+  position: absolute;
+  top: 14%;
+  left: 4%;
+  max-width: 90%;
+  margin: 0;
+  color: #245a91;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(32px, 4.4vw, 72px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -.025em;
+  text-wrap: balance;
+}
+.heading em { font-style: normal; }
+
+.emailRow {
+  position: absolute;
+  top: 34%;
+  right: 6%;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 88%;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(18px, 2.3vw, 32px);
+  font-weight: 600;
+  line-height: 1.3;
+}
+.emailRow > span:first-child { min-width: 0; overflow-wrap: anywhere; }
+.copy {
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+.copy:disabled { cursor: default; }
+.copyStatus {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  font-family: var(--font-geist-sans), sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  color: #075058;
+}
+.social {
+  position: absolute;
+  top: 68%;
+  right: 3%;
+  display: inline-block;
+  padding: 8px 0;
+  color: #171717;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(20px, 2.5vw, 34px);
+  font-weight: 600;
+  text-decoration: none;
+  text-shadow: 0 1px 10px #f7f3ea99;
+}
+.footer {
+  z-index: 1;
+  position: absolute;
+  right: 4%;
+  bottom: 20px;
+  left: 4%;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 24px;
+  color: #fffaf0;
+}
+.footer small { grid-column: 2; }
+.footer small, .footer a { font-size: 13px; letter-spacing: .08em; }
+.footer a { grid-column: 3; justify-self: end; padding-block: 12px; color: inherit; text-decoration: none; }
+.section a:focus-visible, .section button:focus-visible { outline: 3px solid #075058; outline-offset: 5px; }
+.footer a:focus-visible { outline-color: #fffaf0; }
+@media (hover: hover) {
+  .copy:not(:disabled):hover { background: #07505810; }
+  .social[href]:hover, .footer a:hover { text-decoration: underline; text-underline-offset: 5px; }
+}
+@media (max-width: 600px) {
+  .section { --city-position: 60% bottom; }
+  .content { min-height: max(720px, 100svh); }
+  .heading { top: 12%; left: 6%; max-width: 88%; }
+  .emailRow { top: 33%; right: 6%; gap: 2px; font-size: clamp(16px, 4.2vw, 22px); }
+  .social { top: 61%; right: 6%; }
+  .footer { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .footer a { grid-column: 2; }
+  .footer small { grid-row: 2; grid-column: 1 / -1; text-align: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .futureBackground { transition: none; }
+}

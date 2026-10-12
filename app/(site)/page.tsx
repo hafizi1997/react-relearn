@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { ClickWord } from "../components/click-word";
+import { ContactSection } from "../components/contact-section";
 import Link from "next/link";
 import { SectionFlowers } from "../components/section-flowers";
 import { HeroWau } from "../components/hero-wau";
@@ -9,7 +10,7 @@ import { TableScene } from "../components/table-scene";
 
 export default function Home() {
   return (
-    <div className={`${styles.homeShell} page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans`}>
+    <div id="page-top" tabIndex={-1} className={`${styles.homeShell} page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans`}>
       <main className={`${styles.homeContent} content-grid flex-1 bg-surface`}>
         <HeroTransition hero={
         <section className="hero-section" aria-labelledby="hero-heading">
@@ -58,6 +59,7 @@ export default function Home() {
             <span>my apps</span>
           </h2>
         </section>
+        <ContactSection />
       </main>
     </div>
   );
