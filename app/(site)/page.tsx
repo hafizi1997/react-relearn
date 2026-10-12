@@ -56,8 +56,8 @@ export default function Home() {
         <section className={styles.nextSection} aria-labelledby="experience-heading">
           <h2 id="experience-heading" className={styles.experienceStatement}>
             <span>4 years of making</span>{" "}
-            <span>users <ClickWord /> and love</span>{" "}
-            <span>my apps</span>
+            <span>users <ClickWord /> and they</span>{" "}
+            <span>love it</span>
           </h2>
         </section>
         <ProjectShowcase />
