@@ -1,0 +1,39 @@
+.button {
+  display: inline-block;
+  vertical-align: baseline;
+  padding: .02em .3em .09em;
+  border: 2px solid #292b26;
+  border-radius: .22em;
+  background: #bd302c;
+  color: #fff;
+  box-shadow: 0 .07em 0 #292b26;
+  font: inherit;
+  line-height: 1;
+  letter-spacing: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: background-color 180ms ease, color 180ms ease, transform 180ms cubic-bezier(.2, .8, .2, 1), box-shadow 180ms ease, filter 180ms ease;
+}
+
+.button[data-color="yellow"] { background: #f5ca45; color: #292b26; }
+.button[data-color="blue"] { background: #2456ba; color: #fff; }
+.button[data-color="green"] { background: #246b48; color: #fff; }
+@media (hover: hover) and (pointer: fine) {
+  .button:hover {
+    transform: translateY(-.045em) rotate(-2deg) scale(1.035);
+    box-shadow: 0 .12em 0 #292b26, 0 .18em .22em #292b2626;
+    filter: brightness(1.08);
+  }
+}
+
+.button:active {
+  transform: translateY(.06em) scale(.98);
+  box-shadow: 0 .01em 0 #292b26;
+  filter: brightness(.96);
+}
+.button:focus-visible { outline: 3px solid #075058; outline-offset: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .button { transition: none; }
+  .button:hover, .button:active { transform: none; }
+}
