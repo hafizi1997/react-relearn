@@ -286,6 +286,13 @@ a:focus-visible {
   filter: saturate(.88) brightness(1.03);
 }
 
+.hero-background-motion {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  transform-origin: center;
+}
+
 .hero-wau {
   position: absolute;
   z-index: 1;
@@ -390,9 +397,17 @@ a:focus-visible {
   white-space: nowrap;
 }
 
+.hero-heading-clip {
+  display: block;
+  overflow: hidden;
+  padding-bottom: .08em;
+  margin-bottom: -.08em;
+}
+
 .hero-heading-offset { margin-left: 5%; }
 
 .hero-content h1 em {
+  display: inline-block;
   color: #075058;
   font-weight: 400;
 }

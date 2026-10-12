@@ -1,9 +1,7 @@
-import Image from "next/image";
 import { ClickWord } from "../components/click-word";
 import { ContactSection } from "../components/contact-section";
-import Link from "next/link";
 import { SectionFlowers } from "../components/section-flowers";
-import { HeroWau } from "../components/hero-wau";
+import { HeroSection } from "../components/hero-section";
 import styles from "./home.module.css";
 import { HeroTransition } from "../components/hero-transition";
 import { TableScene } from "../components/table-scene";
@@ -13,32 +11,7 @@ export default function Home() {
   return (
     <div id="page-top" tabIndex={-1} className={`${styles.homeShell} page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans`}>
       <main className={`${styles.homeContent} content-grid flex-1 bg-surface`}>
-        <HeroTransition hero={
-        <section className="hero-section" aria-labelledby="hero-heading">
-          <Image
-            className="hero-background"
-            src="/hero/jerai-afternoon.webp"
-            alt=""
-            fill
-            preload
-            sizes="(max-width: 1023px) 1400px, 100vw"
-          />
-          <HeroWau />
-          <SectionFlowers section="hero" />
-          <div className="hero-content">
-            <h1 id="hero-heading">
-              <span className="hero-heading-line">Built with purpose.</span>
-              <span className="hero-heading-line hero-heading-offset">Thoughtful by <em>design.</em></span>
-            </h1>
-            <div className="hero-actions">
-              <Link className="hero-primary-link" href="/experience">
-                View my work <span aria-hidden="true">&rarr;</span>
-              </Link>
-              <Link className="hero-secondary-link" href="/about">About me</Link>
-            </div>
-          </div>
-        </section>
-        } table={
+        <HeroTransition hero={<HeroSection />} table={
         <section className={styles.tableSection} aria-labelledby="table-heading">
           <SectionFlowers section="table" />
           <div className={styles.gameInvitation}>
