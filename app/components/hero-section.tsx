@@ -5,7 +5,6 @@ import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { HeroWau } from "./hero-wau";
-import { SectionFlowers } from "./section-flowers";
 
 const MotionLink = motion.create(Link);
 
@@ -41,7 +40,6 @@ export function HeroSection() {
         />
       </motion.div>
       <HeroWau />
-      <SectionFlowers section="hero" />
       <motion.div
         className="hero-content"
         style={{

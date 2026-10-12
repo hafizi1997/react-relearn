@@ -1,45 +1,19 @@
-import { ClickWord } from "../components/click-word";
 import { ContactSection } from "../components/contact-section";
-import { SectionFlowers } from "../components/section-flowers";
 import { HeroSection } from "../components/hero-section";
+import { ChessSection } from "../components/chess-section";
+import { ExperienceStatement } from "../components/experience-statement";
 import styles from "./home.module.css";
 import { HeroTransition } from "../components/hero-transition";
-import { TableScene } from "../components/table-scene";
 import { ProjectShowcase } from "../components/project-showcase";
+import { VideoSection } from "../components/video-section";
 
 export default function Home() {
   return (
     <div id="page-top" tabIndex={-1} className={`${styles.homeShell} page-shell hero-visual-page flex flex-col flex-1 items-center bg-background font-sans`}>
       <main className={`${styles.homeContent} content-grid flex-1 bg-surface`}>
-        <HeroTransition hero={<HeroSection />} table={
-        <section className={styles.tableSection} aria-labelledby="table-heading">
-          <SectionFlowers section="table" />
-          <div className={styles.gameInvitation}>
-            <h2 id="table-heading">
-              <span>Take a seat</span>{" "}
-              <span className={styles.headingAmpersand}>&amp;</span>{" "}
-              <span>Make your <em>move</em></span>
-            </h2>
-          </div>
-          <div className={styles.tableStage}>
-            <TableScene />
-          </div>
-        </section>
-        } />
-        <section className={styles.videoSection} aria-labelledby="video-heading">
-          <div className={styles.videoPlaceholder}>
-            <p className={styles.videoEyebrow}>Featured film</p>
-            <h2 id="video-heading">Video coming soon</h2>
-            <span className={styles.videoPlayIcon} aria-hidden="true" />
-          </div>
-        </section>
-        <section className={styles.nextSection} aria-labelledby="experience-heading">
-          <h2 id="experience-heading" className={styles.experienceStatement}>
-            <span>4 years of making</span>{" "}
-            <span>users <ClickWord /> and they</span>{" "}
-            <span>love it</span>
-          </h2>
-        </section>
+        <HeroTransition hero={<HeroSection />} table={<ChessSection />} />
+        <VideoSection />
+        <ExperienceStatement />
         <ProjectShowcase />
         <ContactSection />
       </main>

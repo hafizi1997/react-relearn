@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useState } from "react";
 import styles from "./project-showcase.module.css";
 
@@ -17,22 +18,54 @@ const colors = ["#d6af65", "#d7d9cf", "#53a7b5", "#53b9a8", "#d47654", "#749ec4"
 
 export function ProjectShowcase() {
   const [selected, setSelected] = useState(0);
+  const shouldReduceMotion = useReducedMotion();
   const project = projects[selected];
 
   return (
     <section id="projects" className={styles.section} aria-label="Projects">
       <div className={styles.showcase}>
         <div id="project-preview" className={styles.preview} role="group" aria-label={`Preview: ${project.title}`}>
-          {projects.map((item, index) => (
-            <div key={item.image} className={`${styles.slide} ${index === selected ? styles.activeSlide : ""}`} aria-hidden={index !== selected}>
-              <Image src={item.image} alt={item.alt} fill sizes="100vw" className={styles.image} />
-            </div>
-          ))}
+          <AnimatePresence initial={false}>
+            <motion.div
+              key={project.image}
+              className={styles.slide}
+              initial={shouldReduceMotion ? false : { opacity: 0, scale: 1.025 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.99 }}
+              transition={{ duration: shouldReduceMotion ? 0 : 0.55, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Image src={project.image} alt={project.alt} fill sizes="100vw" className={styles.image} />
+            </motion.div>
+          </AnimatePresence>
           <div className={styles.shade} />
           <div className={styles.details} aria-live="polite" aria-atomic="true">
-            <h2>{project.title}</h2>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.h2
+                key={project.title}
+                initial={shouldReduceMotion ? false : { y: 24, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { y: -16, opacity: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.32, ease: [0.22, 1, 0.36, 1] }}
+              >
+                {project.title}
+              </motion.h2>
+            </AnimatePresence>
           </div>
-          <span className={styles.counter} aria-hidden="true">{String(selected + 1).padStart(2, "0")} <span>/ 05</span></span>
+          <span className={styles.counter} aria-hidden="true">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={selected}
+                className={styles.currentCount}
+                initial={shouldReduceMotion ? false : { y: 10, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={shouldReduceMotion ? { opacity: 0 } : { y: -10, opacity: 0 }}
+                transition={{ duration: shouldReduceMotion ? 0 : 0.22 }}
+              >
+                {String(selected + 1).padStart(2, "0")}
+              </motion.span>
+            </AnimatePresence>{" "}
+            <span>/ 05</span>
+          </span>
         </div>
 
         <div className={styles.controls}>
@@ -49,11 +82,37 @@ export function ProjectShowcase() {
             </div>
             <div className={styles.cards} role="group" aria-labelledby="project-selection-label">
               {projects.map((item, index) => (
-                <button key={item.image} type="button" className={`${styles.card} ${index === selected ? styles.selectedCard : ""}`} onClick={() => setSelected(index)} aria-pressed={index === selected} aria-controls="project-preview" aria-label={`Show ${item.title}`}>
+                <motion.button
+                  key={item.image}
+                  type="button"
+                  className={`${styles.card} ${index === selected ? styles.selectedCard : ""}`}
+                  onClick={() => setSelected(index)}
+                  aria-pressed={index === selected}
+                  aria-controls="project-preview"
+                  aria-label={`Show ${item.title}`}
+                  whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.015 }}
+                  whileTap={shouldReduceMotion ? undefined : { y: 0, scale: 0.975 }}
+                  transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                >
                   <Image src={item.image} alt="" fill sizes="120px" className={styles.thumbnail} />
+                  {index === selected && (
+                    <motion.span className={styles.selectedOutline} layoutId="selected-project" aria-hidden="true" />
+                  )}
                   <span className={styles.cardNumber}>{String(index + 1).padStart(2, "0")}</span>
-                  {index === selected && <span className={styles.selectedMark} aria-hidden="true">↗</span>}
-                </button>
+                  <AnimatePresence>
+                    {index === selected && (
+                      <motion.span
+                        className={styles.selectedMark}
+                        aria-hidden="true"
+                        initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.5, rotate: -35 }}
+                        animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                        exit={{ opacity: 0, scale: 0.5 }}
+                      >
+                        ↗
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </motion.button>
               ))}
             </div>
           </div>

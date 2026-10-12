@@ -1,13 +1,20 @@
 "use client";
 
-import { useEffect, useRef, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useState, type ReactNode } from "react";
 import styles from "./hero-transition.module.css";
 import { useSectionScroll } from "./use-section-scroll";
+
+const TableVisibilityContext = createContext(false);
+
+export function useTableVisibility() {
+  return useContext(TableVisibilityContext);
+}
 
 export function HeroTransition({ hero, table }: { hero: ReactNode; table: ReactNode }) {
   const rootRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const tableRef = useRef<HTMLDivElement>(null);
+  const [isTableVisible, setIsTableVisible] = useState(false);
 
   useEffect(() => {
     const root = rootRef.current;
@@ -18,6 +25,7 @@ export function HeroTransition({ hero, table }: { hero: ReactNode; table: ReactN
     const navigation = document.querySelector<HTMLElement>(".site-nav");
     const motion = window.matchMedia("(prefers-reduced-motion: reduce)");
     let frame = 0;
+    let tableVisible = false;
     const update = () => {
       frame = 0;
       const stickyTop = navigation?.getBoundingClientRect().height ?? 0;
@@ -29,6 +37,8 @@ export function HeroTransition({ hero, table }: { hero: ReactNode; table: ReactN
         root.style.removeProperty("--scene-height");
         heroLayer.inert = false;
         tableLayer.inert = false;
+        tableVisible = true;
+        setIsTableVisible(true);
         return;
       }
       root.dataset.animated = "true";
@@ -43,6 +53,11 @@ export function HeroTransition({ hero, table }: { hero: ReactNode; table: ReactN
       root.style.setProperty("--hero-blur", `${(eased * 12).toFixed(2)}px`);
       root.style.setProperty("--table-opacity", String(eased));
       root.dataset.blending = String(progress > 0 && progress < 1);
+      const nextTableVisible = eased >= 0.45;
+      if (nextTableVisible !== tableVisible) {
+        tableVisible = nextTableVisible;
+        setIsTableVisible(tableVisible);
+      }
       // Hidden layers must not intercept pointer or keyboard interaction.
       heroLayer.inert = eased >= 0.5;
       tableLayer.inert = eased < 0.5;
@@ -77,7 +92,11 @@ export function HeroTransition({ hero, table }: { hero: ReactNode; table: ReactN
     <div ref={rootRef} className={styles.transition}>
       <div className={styles.stage}>
         <div ref={heroRef} className={styles.hero}>{hero}</div>
-        <div ref={tableRef} className={styles.table}>{table}</div>
+        <div ref={tableRef} className={styles.table}>
+          <TableVisibilityContext.Provider value={isTableVisible}>
+            {table}
+          </TableVisibilityContext.Provider>
+        </div>
       </div>
     </div>
   );

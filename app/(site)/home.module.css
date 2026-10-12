@@ -14,52 +14,13 @@
   background: #151814;
 }
 
-.videoPlaceholder {
-  position: relative;
-  display: grid;
+.featuredVideo {
+  display: block;
   width: min(100%, 1440px);
   aspect-ratio: 16 / 9;
-  place-content: center;
-  place-items: center;
-  overflow: hidden;
+  object-fit: contain;
   border: 1px solid #f7f3ea24;
-  background:
-    radial-gradient(circle at 50% 45%, #a58b5229, transparent 34%),
-    linear-gradient(135deg, #252a23, #10120f);
-  color: #f7f3ea;
-  text-align: center;
-}
-
-.videoPlaceholder::before {
-  content: "";
-  position: absolute;
-  inset: 16px;
-  border: 1px solid #f7f3ea14;
-  pointer-events: none;
-}
-
-.videoEyebrow {
-  margin: 0 0 16px;
-  color: #d6af65;
-  font-size: clamp(11px, 1vw, 14px);
-  letter-spacing: .22em;
-  text-transform: uppercase;
-}
-
-.videoPlaceholder h2 {
-  margin: 0;
-  font-family: Georgia, "Times New Roman", serif;
-  font-size: clamp(36px, 6vw, 88px);
-  font-weight: 400;
-  letter-spacing: -.04em;
-}
-
-.videoPlayIcon {
-  width: 0;
-  height: 0;
-  margin-top: clamp(28px, 4vw, 48px);
-  border-block: 10px solid transparent;
-  border-left: 16px solid #d6af65;
+  background: #10120f;
 }
 
 .nextSection {
@@ -88,6 +49,20 @@
 
 .experienceStatement > span { display: block; }
 
+.experienceLineClip {
+  display: block;
+  overflow: hidden;
+  padding-bottom: .08em;
+  margin-bottom: -.08em;
+}
+
+.experienceLineClip > span { display: block; }
+
+.experienceHighlight {
+  font-style: italic;
+  font-weight: 400;
+}
+
 .tableSection {
   --table-inset: clamp(24px, 6vw, 112px);
   position: relative;
@@ -97,6 +72,62 @@
   background:
     radial-gradient(ellipse at 74% 40%, #fffcf4 0%, #fffcf400 58%),
     linear-gradient(125deg, #f7f3ea 15%, #ece5d8 100%);
+}
+
+.tableDecorations {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.tableFlower {
+  position: absolute;
+  width: var(--flower-size);
+  aspect-ratio: var(--flower-ratio, 1);
+  background: var(--flower-image) center / contain no-repeat;
+  opacity: var(--flower-opacity, .2);
+  transform: rotate(var(--flower-rotation, 0deg)) scaleX(var(--flower-mirror, 1));
+  transform-origin: center;
+}
+
+.tableFloralLeft {
+  --flower-image: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
+  --flower-size: clamp(300px, 39vw, 620px);
+  --flower-opacity: .16;
+  --flower-rotation: 12deg;
+  left: calc(clamp(300px, 39vw, 620px) * -.62);
+  bottom: -18%;
+}
+
+.tableOrnamentLeft {
+  --flower-image: url("/arts/Elegant%20Tan%20Lily%20Botanical%20Ornament.png");
+  --flower-size: clamp(150px, 19vw, 300px);
+  --flower-opacity: .19;
+  --flower-rotation: 5deg;
+  left: -8%;
+  top: 8%;
+}
+
+.tableSprigRight {
+  --flower-image: url("/arts/Elegant%20Golden%20Botanical%20Lily%20Sprig.png");
+  --flower-size: clamp(190px, 27vw, 420px);
+  --flower-ratio: 3 / 4;
+  --flower-opacity: .13;
+  --flower-rotation: -95deg;
+  right: -13%;
+  top: -8%;
+}
+
+.tableFloralRight {
+  --flower-image: url("/arts/ba07c981-907e-4005-bcde-aefed64fef00.png");
+  --flower-size: clamp(320px, 43vw, 680px);
+  --flower-opacity: .14;
+  --flower-rotation: -9deg;
+  --flower-mirror: -1;
+  right: calc(clamp(320px, 43vw, 680px) * -.62);
+  bottom: -24%;
 }
 
 .gameInvitation {
@@ -109,13 +140,13 @@
   text-align: left;
 }
 
-.gameInvitation::after {
-  content: "";
+.invitationRule {
   display: block;
   width: clamp(72px, 8vw, 128px);
   height: 1px;
   margin-top: 28px;
   background: linear-gradient(to right, #a58b52, #a58b5226);
+  transform-origin: left center;
 }
 
 .gameInvitation h2 {
@@ -129,7 +160,15 @@
   letter-spacing: -.045em;
 }
 
-.gameInvitation h2 > span { display: block; }
+.tableHeadingClip {
+  display: block;
+  overflow: hidden;
+  padding-right: .15em;
+  padding-bottom: .08em;
+  margin-bottom: -.08em;
+}
+
+.tableHeadingClip > span { display: block; }
 .headingAmpersand {
   padding-left: .5em;
   text-align: left;
@@ -170,13 +209,22 @@
 }
 
 @media (max-width: 767px) {
+  .tableDecorations { opacity: .65; }
+
+  .tableOrnamentLeft {
+    left: -18%;
+    top: 18%;
+  }
+
+  .tableSprigRight { right: -30%; }
+
   .gameInvitation {
     top: 60px;
     width: calc(100% - 2 * var(--table-inset));
   }
 
   .gameInvitation h2 { font-size: clamp(32px, 5.5vw, 42px); }
-  .gameInvitation::after { margin-top: 18px; }
+  .invitationRule { margin-top: 18px; }
 
   .tableBackground { inset: 216px 12px 24px; }
 }
