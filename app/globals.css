@@ -35,6 +35,11 @@
 
 html { scrollbar-gutter: stable; }
 
+/* Only the home page's project showcase participates in gentle native snapping. */
+@media (prefers-reduced-motion: no-preference) {
+  html:has(#projects) { scroll-snap-type: y proximity; }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
