@@ -7,6 +7,7 @@ import { HeroWau } from "../components/hero-wau";
 import styles from "./home.module.css";
 import { HeroTransition } from "../components/hero-transition";
 import { TableScene } from "../components/table-scene";
+import { ProjectShowcase } from "../components/project-showcase";
 
 export default function Home() {
   return (
@@ -59,12 +60,7 @@ export default function Home() {
             <span>my apps</span>
           </h2>
         </section>
-        <section className={styles.projectsSection} aria-labelledby="projects-heading">
-          <div className={styles.projectsPlaceholder}>
-            <h2 id="projects-heading">Selected projects</h2>
-            <p>Project showcase coming soon.</p>
-          </div>
-        </section>
+        <ProjectShowcase />
         <ContactSection />
       </main>
     </div>
