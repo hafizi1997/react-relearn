@@ -30,7 +30,7 @@ export function ProjectShowcase() {
           ))}
           <div className={styles.shade} />
           <div className={styles.details} aria-live="polite" aria-atomic="true">
-            <h2>{project.title}<span aria-hidden="true"> /</span></h2>
+            <h2>{project.title}</h2>
           </div>
           <span className={styles.counter} aria-hidden="true">{String(selected + 1).padStart(2, "0")} <span>/ 05</span></span>
         </div>

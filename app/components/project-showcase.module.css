@@ -11,8 +11,8 @@
   width: 100%;
   min-height: 100svh;
   overflow: hidden;
-  background: #232422;
-  color: #fffaf0;
+  background: var(--surface-deep);
+  color: var(--button-text);
 }
 
 .preview {
@@ -21,6 +21,7 @@
   min-height: 320px;
   overflow: hidden;
   background: #66634e;
+  color: var(--button-text);
 }
 
 .slide, .shade { position: absolute; inset: 0; }
@@ -41,7 +42,6 @@
 }
 .details { position: absolute; bottom: 36px; left: 32px; right: 120px; }
 .details h2 { margin: 0; font-size: clamp(36px, 5.4vw, 80px); font-weight: 650; line-height: 1.05; letter-spacing: -.055em; }
-.details h2 span { color: #fff7; }
 .counter { position: absolute; right: 32px; bottom: 39px; font-size: 14px; font-variant-numeric: tabular-nums; }
 .counter span { color: #ddd9; }
 
@@ -51,13 +51,13 @@
 .circle { display: block; width: 32px; height: 32px; border-radius: 50%; }
 .selection { min-width: 0; }
 .selectionHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
-.selectionHeader > span { font-size: 10px; color: #bdbdb6; }
+.selectionHeader > span { font-size: 10px; color: var(--border); }
 .selectionHeader > span > span { margin-left: 6px; }
-.cards { display: flex; gap: 12px; overflow-x: auto; padding: 5px; margin: -5px; scrollbar-width: thin; scrollbar-color: #77766b #232422; }
-.card { position: relative; flex: 1 0 64px; min-width: 0; height: clamp(86px, 9vw, 126px); padding: 0; border: 0; border-radius: 8px; overflow: hidden; cursor: pointer; background: #45463f; opacity: .6; transition: opacity 200ms ease, box-shadow 200ms ease; }
+.cards { display: flex; gap: 12px; overflow-x: auto; padding: 5px; margin: -5px; scrollbar-width: thin; scrollbar-color: var(--border) var(--surface-deep); }
+.card { position: relative; flex: 1 0 64px; min-width: 0; height: clamp(86px, 9vw, 126px); padding: 0; border: 0; border-radius: 8px; overflow: hidden; cursor: pointer; background: var(--border); opacity: .6; transition: opacity 200ms ease, box-shadow 200ms ease; }
 .card:hover { opacity: 1; }
-.selectedCard { opacity: 1; box-shadow: 0 0 0 2px #e3c887; }
-.card:focus-visible { outline: 2px solid white; outline-offset: 3px; opacity: 1; }
+.selectedCard { opacity: 1; box-shadow: 0 0 0 2px var(--highlight); }
+.card:focus-visible { outline: 2px solid var(--button-text); outline-offset: 3px; opacity: 1; }
 .card::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(transparent, #0009); }
 .cardNumber, .selectedMark { position: absolute; z-index: 1; bottom: 9px; color: white; font-size: 11px; }
 .cardNumber { left: 10px; }
