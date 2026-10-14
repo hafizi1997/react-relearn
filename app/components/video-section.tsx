@@ -10,6 +10,8 @@ export function VideoSection() {
     const video = videoRef.current;
     if (!video) return;
 
+    video.volume = 0.05;
+
     let inView = false;
     const syncPlayback = () => {
       if (inView && !document.hidden) {
@@ -48,8 +50,8 @@ export function VideoSection() {
         preload="metadata"
         aria-label="Featured portfolio video"
       >
-        <source src="/video/dummy.mp4" type="video/mp4" />
-        Your browser does not support embedded video. <a href="/video/dummy.mp4">Watch the video</a>.
+        <source src="/video/shopping-cart-process-clean.mp4" type="video/mp4" />
+        Your browser does not support embedded video. <a href="/video/shopping-cart-process-clean.mp4">Watch the video</a>.
       </video>
     </section>
   );

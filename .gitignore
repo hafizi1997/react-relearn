@@ -42,6 +42,7 @@ next-env.d.ts
 
 # Local visual checks and temporary output
 /tmp/
+/video-production/
 /artwork/wau-bulan/hero-person-*.png
 /artwork/wau-bulan/refined-*.png
 /artwork/wau-bulan/left-corner-*.png
