@@ -49,8 +49,11 @@
 
 .controls { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; padding: 28px 32px 32px; }
 .label { letter-spacing: .06em; }
-.circles { display: grid; grid-template-columns: repeat(6, 32px); gap: 12px 14px; margin-top: 22px; }
-.circle { display: block; width: 32px; height: 32px; border-radius: 50%; }
+.circles { display: grid; grid-template-columns: repeat(6, 40px); gap: 12px 14px; margin-top: 22px; }
+.circle { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid #ffffff24; border-radius: 50%; background: #ffffff12; transition: background 200ms ease, transform 200ms ease; }
+.circle:hover, .circle:focus-visible { background: #ffffff26; transform: scale(1.08); }
+.circle img { width: 28px; height: 28px; object-fit: contain; }
+.emptyTechnologies { margin: 22px 0 0; color: var(--border); font-size: 12px; }
 .selection { min-width: 0; }
 .selectionHeader { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
 .selectionHeader > span { font-size: 10px; color: var(--border); }
@@ -75,8 +78,9 @@
 
 @media (max-width: 900px) {
   .controls { grid-template-columns: 1fr 1.5fr; gap: 28px; padding: 24px; }
-  .circles { grid-template-columns: repeat(6, 24px); gap: 12px; }
-  .circle { width: 24px; height: 24px; }
+  .circles { grid-template-columns: repeat(6, 32px); gap: 12px; }
+  .circle { width: 32px; height: 32px; }
+  .circle img { width: 22px; height: 22px; }
   .selectionHeader > span { display: none; }
 }
 
@@ -84,7 +88,7 @@
   .details { left: 20px; right: 20px; bottom: 56px; }
   .counter { right: 20px; bottom: 22px; font-size: 12px; }
   .controls { grid-template-columns: minmax(0, 1fr); gap: 28px; padding: 24px 20px; }
-  .circles { grid-template-columns: repeat(6, 24px); margin-top: 16px; }
+  .circles { grid-template-columns: repeat(6, 32px); margin-top: 16px; }
   .card { flex: 1 0 64px; height: 96px; }
 }
 

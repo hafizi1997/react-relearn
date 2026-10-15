@@ -7,14 +7,12 @@ import styles from "./project-showcase.module.css";
 
 // Replace these sample titles and images with real project details when ready.
 const projects = [
-  { title: "Project 01", image: "/project/project-example.jpg", alt: "Blue puzzle pieces spelling Project" },
-  { title: "Project 02", image: "/project/project-example2.png", alt: "Sunlit leaves casting shadows on a cream wall" },
-  { title: "Project 03", image: "/project/project-example3.png", alt: "Olive linen folds in warm sunlight" },
-  { title: "Project 04", image: "/project/project-example4.png", alt: "Wood and stone composition with a wooden sphere" },
-  { title: "Project 05", image: "/project/project-example5.png", alt: "Design workspace with a sketchbook and laptop" },
+  { title: "Project 01", image: "/project/project-example.jpg", alt: "Blue puzzle pieces spelling Project", technologies: [{ name: "React", logo: "/logos/react.svg" }, { name: "TypeScript", logo: "/logos/typescript.svg" }, { name: "Next.js", logo: "/logos/nextjs.svg" }] },
+  { title: "Project 02", image: "/project/project-example2.png", alt: "Sunlit leaves casting shadows on a cream wall", technologies: [{ name: "Python", logo: "/logos/python.svg" }, { name: "Pandas", logo: "/logos/pandas.svg" }, { name: "NumPy", logo: "/logos/numpy.svg" }, { name: "Matplotlib", logo: "/logos/matplotlib.svg" }] },
+  { title: "Project 03", image: "/project/project-example3.png", alt: "Olive linen folds in warm sunlight", technologies: [{ name: "SQL", logo: "/logos/sql.svg" }, { name: "MySQL", logo: "/logos/mysql.svg" }, { name: "Power BI", logo: "/logos/power-bi.svg" }, { name: "DAX", logo: "/logos/dax.svg" }] },
+  { title: "Project 04", image: "/project/project-example4.png", alt: "Wood and stone composition with a wooden sphere", technologies: [{ name: "Laravel", logo: "/logos/laravel.svg" }, { name: "PHP", logo: "/logos/php.svg" }, { name: "RESTful API Design", logo: "/logos/rest-api.svg" }, { name: "Prisma ORM", logo: "/logos/prisma.svg" }] },
+  { title: "Project 05", image: "/project/project-example5.png", alt: "Design workspace with a sketchbook and laptop", technologies: [{ name: "Node.js", logo: "/logos/nodejs.svg" }, { name: "Express.js", logo: "/logos/expressjs.svg" }, { name: "MongoDB", logo: "/logos/mongodb.svg" }, { name: "Microsoft Azure", logo: "/logos/microsoft-azure.svg" }, { name: "Git", logo: "/logos/git.svg" }] },
 ];
-
-const colors = ["#d6af65", "#d7d9cf", "#53a7b5", "#53b9a8", "#d47654", "#749ec4", "#b38c9d", "#bb6470", "#81b8ab", "#8c9a79", "#d1956f", "#a29aca"];
 
 export function ProjectShowcase() {
   const [selected, setSelected] = useState(0);
@@ -69,11 +67,27 @@ export function ProjectShowcase() {
         </div>
 
         <div className={styles.controls}>
-          <div className={styles.palette} aria-hidden="true">
-            <p className={styles.label}>Colours</p>
-            <div className={styles.circles}>
-              {colors.map((color) => <span key={color} className={styles.circle} style={{ backgroundColor: color }} />)}
-            </div>
+          <div className={styles.palette}>
+            <p className={styles.label}>Technologies</p>
+            <AnimatePresence mode="popLayout" initial={false}>
+              <motion.div key={project.title} className={styles.circles} aria-label={`Technologies used in ${project.title}`}>
+                {project.technologies.map((technology) => (
+                  <motion.span
+                    key={technology.name}
+                    className={styles.circle}
+                    title={technology.name}
+                    aria-label={technology.name}
+                    initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.7 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                    transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+                  >
+                    <Image src={technology.logo} alt={technology.name} width={28} height={28} />
+                  </motion.span>
+                ))}
+              </motion.div>
+            </AnimatePresence>
+            {!project.technologies.length && <p className={styles.emptyTechnologies}>Technology details coming soon.</p>}
           </div>
           <div className={styles.selection}>
             <div className={styles.selectionHeader}>

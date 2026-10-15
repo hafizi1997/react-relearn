@@ -220,6 +220,10 @@
   background: #f7f7f6;
 }
 
+.media {
+  object-fit: cover;
+}
+
 .metaTop .placeholder {
   order: 2;
 }
@@ -286,14 +290,6 @@
 
 .deepTone .placeholder {
   background: #bfbfbd;
-}
-
-.loader {
-  width: 22px;
-  height: 22px;
-  border: 3px solid color-mix(in srgb, var(--highlight) 42%, transparent);
-  border-right-color: #f58220;
-  border-radius: 50%;
 }
 
 .card video {
