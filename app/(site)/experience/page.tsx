@@ -1,5 +1,11 @@
+import type { Metadata } from "next";
 import { ExperienceDecorations } from "./experience-decorations";
 import styles from "./experience.module.css";
+
+export const metadata: Metadata = {
+  title: "Experience",
+  description: "Selected projects and experiments by Hafizi across software, data, and interaction design.",
+};
 
 type ExperienceCard = {
   title: string;

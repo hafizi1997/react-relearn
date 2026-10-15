@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import Image from "next/image";
 import type * as THREE from "three";
 import { HeroWauPerson } from "./hero-wau-person";
 
@@ -364,14 +365,15 @@ export function HeroWau() {
   return (
     <div className="hero-wau" ref={hostRef} aria-hidden="true">
       {/* A render of the same model stays visible until WebGL is ready. */}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         ref={posterRef}
         className="hero-wau-poster"
         src="/hero/wau-bulan-flight.webp"
         alt=""
         width={1200}
         height={880}
+        sizes="(max-width: 1023px) 80vw, 38vw"
+        unoptimized
       />
       <svg className="hero-wau-fallback-rope" viewBox="0 0 100 100" preserveAspectRatio="none">
         <path ref={fallbackRopeRef} fill="none" stroke="#806744" strokeWidth="1.4" vectorEffect="non-scaling-stroke" />

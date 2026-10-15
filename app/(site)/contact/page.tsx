@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Contact",
+  description: "Get in touch with Hafizi about software, data analytics, and collaboration.",
+};
+
 export default function ContactPage() {
   return (
     <div className="page-shell flex flex-col flex-1 items-center bg-background font-sans">

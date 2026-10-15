@@ -46,3 +46,6 @@ next-env.d.ts
 /artwork/wau-bulan/hero-person-*.png
 /artwork/wau-bulan/refined-*.png
 /artwork/wau-bulan/left-corner-*.png
+
+# Blender autosave backups
+*.blend1

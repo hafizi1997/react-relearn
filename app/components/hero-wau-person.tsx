@@ -1,4 +1,5 @@
 import type { RefObject } from "react";
+import Image from "next/image";
 
 /** Approved cartoon cutout with a measured grip for the separate kite string. */
 export function HeroWauPerson({
@@ -8,14 +9,15 @@ export function HeroWauPerson({
 }) {
   return (
     <div className="hero-wau-person">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img
+      <Image
         className="hero-wau-person-body"
         src="/hero/wau-character-tengkolok.webp"
         width={1254}
         height={1254}
         alt=""
         draggable={false}
+        sizes="220px"
+        unoptimized
       />
       <span className="hero-wau-person-grip" ref={gripRef} />
     </div>
