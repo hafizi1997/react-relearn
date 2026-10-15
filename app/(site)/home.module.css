@@ -61,7 +61,7 @@
 }
 
 .tableSection {
-  --table-inset: clamp(24px, 6vw, 112px);
+  --table-inset: clamp(24px, 5vw, 88px);
   position: relative;
   z-index: 3;
   isolation: isolate;
@@ -131,7 +131,7 @@
   position: absolute;
   top: calc(clamp(64px, 12vh, 140px) + 48px);
   left: var(--table-inset);
-  width: 30%;
+  width: min(25%, 360px);
   z-index: 3;
   pointer-events: none;
   text-align: left;
@@ -166,6 +166,8 @@
 }
 
 .tableHeadingClip > span { display: block; }
+.gameInvitation h2 > .tableHeadingClip:last-child { width: max-content; }
+.gameInvitation h2 > .tableHeadingClip:last-child > span { white-space: nowrap; }
 .headingAmpersand {
   padding-left: .5em;
   text-align: left;
@@ -181,7 +183,7 @@
 
 .tableBackground {
   position: absolute;
-  inset: 7% 2% 4% 33%;
+  inset: 3% -6% 2% 30%;
   isolation: isolate;
 }
 
@@ -205,6 +207,39 @@
   height: 100%;
 }
 
+.tableCanvas canvas { touch-action: manipulation; }
+.gameStartOverlay {
+  position: absolute;
+  z-index: 4;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: #21190f20;
+  backdrop-filter: blur(2px);
+}
+.gameStartCard {
+  width: min(100%, 380px);
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid #9d875a70;
+  border-radius: 22px;
+  background: #faf7eff2;
+  box-shadow: 0 20px 70px #30261840, inset 0 1px #fff;
+  text-align: center;
+}
+.gameStartChoices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.gameStartChoice {
+  min-height: 54px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font: 500 15px Georgia, "Times New Roman", serif;
+  cursor: pointer;
+  transition: transform 160ms ease, box-shadow 160ms ease;
+}
+.gameStartChoice:hover { transform: translateY(-2px); box-shadow: 0 7px 18px #30261826; }
+.gameStartChoice:focus-visible { outline: 3px solid #b99c5b; outline-offset: 3px; }
+.creamChoice { border-color: #c6b48c; background: linear-gradient(145deg, #fffdf5, #e5d5ae); color: #383329; }
+.charcoalChoice { border-color: #111b17; background: linear-gradient(145deg, #34453b, #17251e); color: #fffaf0; }
 @media (max-width: 767px) {
   .tableDecorations { opacity: .65; }
 
@@ -223,7 +258,9 @@
   .gameInvitation h2 { font-size: clamp(32px, 5.5vw, 42px); }
   .invitationRule { margin-top: 18px; }
 
-  .tableBackground { inset: 216px 12px 24px; }
+  .tableSection { min-height: 100svh; }
+  .tableStage { height: max(100svh, 760px); }
+  .tableBackground { inset: 190px 4px 100px; }
 }
 
 /* Clip decorations without creating a scroll container that breaks sticky scenes. */
