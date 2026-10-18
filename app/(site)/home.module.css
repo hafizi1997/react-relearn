@@ -27,7 +27,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   place-items: center;
-  min-height: 100svh;
+  min-height: 120svh;
   padding: clamp(72px, 10vw, 144px) clamp(16px, 5vw, 96px);
   background: var(--bg);
 }
@@ -217,6 +217,10 @@
   padding: 24px;
   background: #21190f20;
   backdrop-filter: blur(2px);
+  top: 0;
+  right: 8%;
+  bottom: 0;
+  left: 8%;
 }
 .gameStartCard {
   width: min(100%, 380px);
@@ -227,6 +231,30 @@
   box-shadow: 0 20px 70px #30261840, inset 0 1px #fff;
   text-align: center;
 }
+.gameResult {
+  margin: 0;
+  color: #292b26;
+  font: 400 clamp(28px, 4vw, 42px)/1.1 Georgia, "Times New Roman", serif;
+}
+.gameResultDetail {
+  margin: 12px 0 24px;
+  color: #5d584d;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.gameResetButton {
+  min-height: 50px;
+  padding: 0 24px;
+  border: 1px solid #17251e;
+  border-radius: 999px;
+  background: #17251e;
+  color: #fffaf0;
+  font: 500 15px Georgia, "Times New Roman", serif;
+  cursor: pointer;
+  transition: transform 160ms ease, background-color 160ms ease;
+}
+.gameResetButton:hover { transform: translateY(-2px); background: #34453b; }
+.gameResetButton:focus-visible { outline: 3px solid #b99c5b; outline-offset: 3px; }
 .gameStartChoices { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
 .gameStartChoice {
   min-height: 54px;

@@ -196,7 +196,7 @@ export function TableScene() {
           computerThinkingRef.current = false;
           setComputerThinking(false);
           setMessage(capturedAll
-            ? `${moving.side === playerSideRef.current ? "You win" : "Computer wins"} — all opposing pieces are captured.`
+            ? moving.side === playerSideRef.current ? "You win" : "You lose!"
             : "Draw — the next player has no legal moves.");
         } else if (nextSide !== playerSideRef.current) {
           computerThinkingRef.current = true;
@@ -361,6 +361,15 @@ export function TableScene() {
               resetRef.current();
             }}>Black</button>
           </div>
+        </div>
+      </div>}
+      {gameStarted && gameOver && <div className={styles.gameStartOverlay}>
+        <div className={styles.gameStartCard} role="group" aria-label="Game over">
+          <p className={styles.gameResult}>{message.split(" — ")[0]}</p>
+          {message.split(" — ")[1] && <p className={styles.gameResultDetail}>{message.split(" — ")[1]}</p>}
+          <button type="button" className={styles.gameResetButton} onClick={() => resetRef.current()}>
+            Play again
+          </button>
         </div>
       </div>}
       <p className="sr-only" role="status" aria-live="polite">
