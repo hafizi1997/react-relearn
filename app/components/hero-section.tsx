@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, useReducedMotion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { HeroWau } from "./hero-wau";
+import { HeroAirflow } from "./hero-airflow";
 
 const MotionLink = motion.create(Link);
 
@@ -39,6 +40,7 @@ export function HeroSection() {
           sizes="(max-width: 1023px) 1400px, 100vw"
         />
       </motion.div>
+      <HeroAirflow />
       <HeroWau />
       <motion.div
         className="hero-content"
