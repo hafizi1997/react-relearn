@@ -418,7 +418,7 @@ a:focus-visible {
   align-items: center;
   gap: 16px 28px;
   margin-top: 24px;
-  margin-left: 5%;
+  margin-left: 16%;
 }
 
 .hero-primary-link,
@@ -515,7 +515,7 @@ a:focus-visible {
   }
 
   .hero-heading-offset { margin-left: 12%; }
-  .hero-actions { margin-left: 12%; margin-top: 28px; }
+  .hero-actions { margin-left: 22%; margin-top: 28px; }
 
 }
 

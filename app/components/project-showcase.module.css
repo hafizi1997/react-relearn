@@ -29,6 +29,7 @@
 .slide, .shade { position: absolute; inset: 0; }
 .slide { opacity: 0; }
 .image, .thumbnail { object-fit: cover; }
+.image { object-position: center top; }
 .shade {
   background: linear-gradient(180deg, #0005, transparent 30%), linear-gradient(0deg, #10130ee6, #10130e26 48%, transparent 70%);
   pointer-events: none;
