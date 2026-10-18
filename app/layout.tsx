@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://hafizi.dev"),
+  metadataBase: new URL("https://hafizyy.com"),
   title: {
     default: "Hafizi | Developer & Data Analyst",
     template: "%s | Hafizi",
