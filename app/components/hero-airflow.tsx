@@ -22,6 +22,10 @@ export function HeroAirflow() {
           <path d="M-180 780 C 250 520, 430 820, 850 590 S 1280 350, 1720 470" />
           <path className="hero-airflow-accent" d="M570 645 C 650 600, 720 610, 790 575" />
           <path d="M160 980 C 410 670, 700 820, 970 650 S 1300 480, 1630 560" />
+          <path d="M-80 595 C 240 350, 520 650, 760 470 S 1240 180, 1700 270" />
+          <path d="M-100 850 C 280 610, 520 880, 900 650 S 1330 430, 1720 520" />
+          <path d="M80 900 C 360 720, 620 780, 940 600 S 1330 520, 1650 610" />
+          <path d="M250 760 C 500 530, 690 700, 980 500 S 1370 300, 1680 390" />
         </g>
 
         <g className="hero-airflow-ribbons" fill="none" stroke="url(#airflow-gold)" strokeLinecap="round" filter="url(#airflow-soft)">
@@ -29,6 +33,10 @@ export function HeroAirflow() {
           <path d="M-180 780 C 250 520, 430 820, 850 590 S 1280 350, 1720 470" />
           <path className="hero-airflow-accent" d="M570 645 C 650 600, 720 610, 790 575" />
           <path d="M160 980 C 410 670, 700 820, 970 650 S 1300 480, 1630 560" />
+          <path d="M-80 595 C 240 350, 520 650, 760 470 S 1240 180, 1700 270" />
+          <path d="M-100 850 C 280 610, 520 880, 900 650 S 1330 430, 1720 520" />
+          <path d="M80 900 C 360 720, 620 780, 940 600 S 1330 520, 1650 610" />
+          <path d="M250 760 C 500 530, 690 700, 980 500 S 1370 300, 1680 390" />
         </g>
       </svg>
     </div>
