@@ -30,7 +30,7 @@ export default function AboutPage() {
 
           <div className={styles.portraitColumn}>
             <div className={styles.portraitFrame}>
-              <Image className={styles.portrait} src="/about/hafizi.jpg" alt="Hafizi, software developer and data analyst" fill priority sizes="(max-width: 760px) 78vw, 390px" />
+              <Image className={styles.portrait} src="/about/hafizi.png" alt="Hafizi, software developer and data analyst" fill priority sizes="(max-width: 760px) 78vw, 390px" />
               <span className={styles.portraitIndex} aria-hidden="true">01 / THE PERSON</span>
               <span className={styles.portraitSeal} aria-hidden="true">Bina<br />&nbsp;·&nbsp;<br />faham</span>
             </div>
