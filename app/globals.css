@@ -299,7 +299,7 @@ a:focus-visible {
   z-index: 2;
   overflow: hidden;
   pointer-events: none;
-  opacity: .62;
+  opacity: .72;
   mix-blend-mode: normal;
   filter: drop-shadow(0 2px 6px rgba(7, 80, 88, .12));
   mask-image: linear-gradient(to bottom, transparent 0%, #000 22%, #000 78%, transparent 100%);
@@ -314,7 +314,7 @@ a:focus-visible {
 
 .hero-airflow-glow {
   stroke-width: 24;
-  opacity: .28;
+  opacity: .36;
 }
 
 .hero-airflow-ribbons {
@@ -323,14 +323,14 @@ a:focus-visible {
   animation: hero-airflow-drift 4.5s linear infinite;
 }
 
-.hero-airflow-ribbons path { opacity: .58; }
-.hero-airflow-ribbons path:nth-child(2) { opacity: .42; }
-.hero-airflow-ribbons path:nth-child(3) { opacity: .5; }
-.hero-airflow-ribbons path:nth-child(4) { opacity: .36; }
-.hero-airflow-ribbons path:nth-child(5) { opacity: .46; }
-.hero-airflow-ribbons path:nth-child(6) { opacity: .34; }
-.hero-airflow-ribbons path:nth-child(7) { opacity: .4; }
-.hero-airflow-ribbons path:nth-child(8) { opacity: .3; }
+.hero-airflow-ribbons path { opacity: .68; }
+.hero-airflow-ribbons path:nth-child(2) { opacity: .5; }
+.hero-airflow-ribbons path:nth-child(3) { opacity: .6; }
+.hero-airflow-ribbons path:nth-child(4) { opacity: .44; }
+.hero-airflow-ribbons path:nth-child(5) { opacity: .56; }
+.hero-airflow-ribbons path:nth-child(6) { opacity: .42; }
+.hero-airflow-ribbons path:nth-child(7) { opacity: .5; }
+.hero-airflow-ribbons path:nth-child(8) { opacity: .38; }
 
 .hero-airflow-ribbons path:nth-child(2) {
   animation-delay: -6s;
