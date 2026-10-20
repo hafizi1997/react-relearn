@@ -1,0 +1,22 @@
+.content {
+  z-index: 50;
+  overflow: hidden;
+  border: 1px solid #ffffff24;
+  border-radius: 6px;
+  background: #171717;
+  padding: 7px 10px;
+  color: #fffaf0;
+  font-size: 11px;
+  line-height: 1.2;
+  box-shadow: 0 8px 24px #0005;
+  animation: tooltip-in 140ms ease-out;
+}
+
+@keyframes tooltip-in {
+  from { opacity: 0; transform: translateY(3px) scale(.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content { animation: none; }
+}

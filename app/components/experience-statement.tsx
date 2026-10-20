@@ -41,7 +41,7 @@ export function ExperienceStatement() {
               className={styles.experienceHighlight}
               variants={{
                 hidden: { color: "#171717" },
-                visible: { color: "#075058" },
+                visible: { color: "#bd302c" },
               }}
               transition={{ duration: shouldReduceMotion ? 0 : 0.7, delay: shouldReduceMotion ? 0 : 0.35 }}
             >

@@ -3,6 +3,12 @@
 import Image from "next/image";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import styles from "./project-showcase.module.css";
 
 // Replace these sample titles and images with real project details when ready.
@@ -110,7 +116,8 @@ export function ProjectShowcase() {
   }, [shouldReduceMotion]);
 
   return (
-    <section id="projects" className={styles.section} aria-label="Projects">
+    <TooltipProvider delayDuration={300}>
+      <section id="projects" className={styles.section} aria-label="Projects">
       <div className={styles.showcase}>
         <div
           id="project-preview"
@@ -194,29 +201,21 @@ export function ProjectShowcase() {
                 aria-label={`Technologies used in ${project.title}`}
               >
                 {project.technologies.map((technology) => (
-                  <motion.span
-                    key={technology.name}
-                    className={styles.circle}
-                    title={technology.name}
-                    aria-label={technology.name}
-                    initial={
-                      shouldReduceMotion ? false : { opacity: 0, scale: 0.7 }
-                    }
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={
-                      shouldReduceMotion
-                        ? { opacity: 0 }
-                        : { opacity: 0, scale: 0.7 }
-                    }
-                    transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
-                  >
-                    <Image
-                      src={technology.logo}
-                      alt={technology.name}
-                      width={28}
-                      height={28}
-                    />
-                  </motion.span>
+                  <Tooltip key={technology.name}>
+                    <TooltipTrigger asChild>
+                      <motion.span
+                        className={styles.circle}
+                        aria-label={technology.name}
+                        initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.7 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.7 }}
+                        transition={{ duration: shouldReduceMotion ? 0 : 0.2 }}
+                      >
+                        <Image src={technology.logo} alt={technology.name} width={28} height={28} />
+                      </motion.span>
+                    </TooltipTrigger>
+                    <TooltipContent>{technology.name}</TooltipContent>
+                  </Tooltip>
                 ))}
               </motion.div>
             </AnimatePresence>
@@ -241,22 +240,19 @@ export function ProjectShowcase() {
               aria-labelledby="project-selection-label"
             >
               {projects.map((item, index) => (
-                <motion.button
-                  key={item.image}
-                  type="button"
-                  className={`${styles.card} ${index === selected ? styles.selectedCard : ""}`}
-                  onClick={() => setSelected(index)}
-                  aria-pressed={index === selected}
-                  aria-controls="project-preview"
-                  aria-label={`Show ${item.title}`}
-                  whileHover={
-                    shouldReduceMotion ? undefined : { y: -4, scale: 1.015 }
-                  }
-                  whileTap={
-                    shouldReduceMotion ? undefined : { y: 0, scale: 0.975 }
-                  }
-                  transition={{ type: "spring", stiffness: 420, damping: 28 }}
-                >
+                <Tooltip key={item.image}>
+                  <TooltipTrigger asChild>
+                    <motion.button
+                      type="button"
+                      className={`${styles.card} ${index === selected ? styles.selectedCard : ""}`}
+                      onClick={() => setSelected(index)}
+                      aria-pressed={index === selected}
+                      aria-controls="project-preview"
+                      aria-label={`Show ${item.title}`}
+                      whileHover={shouldReduceMotion ? undefined : { y: -4, scale: 1.015 }}
+                      whileTap={shouldReduceMotion ? undefined : { y: 0, scale: 0.975 }}
+                      transition={{ type: "spring", stiffness: 420, damping: 28 }}
+                    >
                   <Image
                     src={item.image}
                     alt=""
@@ -291,12 +287,16 @@ export function ProjectShowcase() {
                       </motion.span>
                     )}
                   </AnimatePresence>
-                </motion.button>
+                    </motion.button>
+                  </TooltipTrigger>
+                  <TooltipContent side="top">View {item.title}</TooltipContent>
+                </Tooltip>
               ))}
             </div>
           </div>
         </div>
       </div>
-    </section>
+      </section>
+    </TooltipProvider>
   );
 }
