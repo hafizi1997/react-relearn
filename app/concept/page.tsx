@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import styles from "./concept.module.css";
+import { OpeningStatement } from "./opening-statement";
 
 export const metadata: Metadata = {
   title: "Concept | Hafizi",
@@ -42,10 +43,12 @@ function MoodImage({ name, alt }: { name: string; alt: string }) {
 export default function ConceptPage() {
   return (
     <article className={styles.page}>
+      <OpeningStatement />
+
       <section className={styles.hero} id="design-thinking" aria-labelledby="concept-heading">
         <div className={styles.heroCopy}>
           <p className={styles.label}>Design thinking</p>
-          <h1 id="concept-heading" className={styles.heading}>The concept<br />behind the design.</h1>
+          <h2 id="concept-heading" className={styles.heading}>The concept<br />behind the design.</h2>
           <p className={styles.description}>A closer look at the ideas, choices and principles that shape my website — and how they create a better experience.</p>
         </div>
         <div className={styles.heroImage}>

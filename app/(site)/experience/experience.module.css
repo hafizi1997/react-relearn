@@ -126,8 +126,8 @@
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: var(--content-max-width);
-  padding: 32px var(--side-padding) 80px;
+  max-width: 1440px;
+  padding: 32px clamp(24px, 5vw, 64px) 80px;
 }
 
 .heading {
