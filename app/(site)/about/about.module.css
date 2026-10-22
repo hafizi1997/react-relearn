@@ -66,7 +66,6 @@
 .portraitCaption { display: flex; justify-content: space-between; gap: 12px; margin: 15px 4px 0; color: #756d60; font-size: 10px; letter-spacing: .045em; }
 .portraitCaption span:first-child { color: var(--deep-teal); }
 .heroOrbit { position: absolute; z-index: 0; top: 8%; right: -6%; color: #b59a664f; font-size: 110px; animation: slowTurn 38s linear infinite; }
-.heroNote { position: absolute; right: 36%; bottom: 19%; color: #a2814c; font-family: Georgia,serif; font-size: 14px; font-style: italic; line-height: 1.15; transform: rotate(-11deg); }
 
 .rule { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; border-top: 1px solid #d8d0c2; border-bottom: 1px solid #d8d0c2; color: #837b6f; font-size: 9px; letter-spacing: .18em; }
 .story { display: grid; grid-template-columns: .88fr 1.12fr; gap: clamp(36px,8vw,130px); padding: 104px 0 118px; }
@@ -146,7 +145,6 @@
 @media (max-width: 860px) {
   .hero { grid-template-columns: minmax(0,1fr) minmax(230px,.76fr); gap: 34px; min-height: 580px; }
   .hero h1 { font-size: clamp(45px,7vw,70px); }
-  .heroNote { display: none; }
   .story { gap: 45px; }
   .feature { margin-inline: -24px; padding-inline: 28px; gap: 30px; }
   .toolkit { gap: 42px; grid-template-columns: minmax(0,.8fr) minmax(320px,1fr); }

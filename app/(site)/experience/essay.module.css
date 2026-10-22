@@ -26,10 +26,6 @@
 .hero { position: relative; overflow: hidden; width: 100%; aspect-ratio: 16 / 9; border-radius: 12px; background: var(--surface); }
 .hero img { object-fit: cover; }
 .placeholder { display: grid; place-items: center; background: linear-gradient(135deg, #eee7db, #d9d0c1); }
-.placeholderCard { display: grid; gap: 12px; width: min(72%, 480px); padding: 28px; border: 1px dashed color-mix(in srgb, var(--text-secondary) 45%, transparent); color: var(--text-secondary); text-align: center; }
-.placeholderCard span, .placeholderCard small { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
-.placeholderCard strong { color: var(--text-primary); font-size: clamp(24px, 4vw, 42px); font-weight: 450; letter-spacing: -.04em; }
-.inlinePlaceholder { display: grid; place-items: center; min-height: 150px; margin-top: 24px; padding: 24px; border: 1px dashed var(--border); background: color-mix(in srgb, var(--surface) 70%, var(--bg)); color: var(--text-secondary); font-size: 12px; letter-spacing: .08em; text-align: center; text-transform: uppercase; }
 .inlineImage { position: relative; overflow: hidden; min-height: 360px; margin-top: 24px; border-radius: 8px; background: var(--surface); }
 .inlineImage img { object-fit: cover; }
 .body { max-width: 680px; margin: 72px auto 0; }

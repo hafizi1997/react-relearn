@@ -5,7 +5,7 @@ export type Essay = {
   intro: string;
   hero?: string;
   heroAlt: string;
-  sections: { heading: string; body: string; mediaLabel?: string; mediaSrc?: string; mediaAlt?: string }[];
+  sections: { heading: string; body: string; mediaSrc?: string; mediaAlt?: string }[];
 };
 
 export const essays: Essay[] = [
@@ -22,14 +22,12 @@ export const essays: Essay[] = [
         body: "Software development taught me to think about how things work: how a feature should behave, how data should move through a system, and how small decisions can affect the experience of the person using it. Data analysis began with a different question. Instead of asking only whether a system works, I started asking what its data was trying to tell me.",
         mediaSrc: "/articles/article-second-1.jpg",
         mediaAlt: "A thoughtful woman surrounded by software development notes and technical sketches on a chalkboard",
-        mediaLabel: "Image placeholder · The shift from building to understanding",
       },
       {
         heading: "The skills that came with me",
         mediaSrc: "/articles/article-third-1.jpg",
         mediaAlt: "An abstract visualization of data being inspected, cleaned, and validated",
         body: "The move was not a complete reset. Working with software had already taught me to be precise, to understand relationships between parts, and to be suspicious of assumptions that had not been tested. Those habits became useful when I began cleaning datasets, checking definitions, and tracing an unexpected result back to its source.",
-        mediaLabel: "Image placeholder · Skills carried across the transition",
       },
       {
         heading: "Learning to stay with the messy part",
@@ -42,7 +40,6 @@ export const essays: Essay[] = [
         mediaSrc: "/articles/article-fiveth-1.jpg",
         mediaAlt: "Interlocking construction bricks representing software, data, and continuous improvement",
         body: "The more I learn about analysis, the more connected it feels to development. Reliable software creates better conditions for reliable data, and useful analysis can reveal where a product or process needs to improve. I am interested in the space between those two practices: making things work, then learning how to make them more useful.",
-        mediaLabel: "Image placeholder · Complexity becoming a clear insight",
       },
     ],
   },

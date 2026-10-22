@@ -38,7 +38,6 @@ export default function AboutPage() {
           </div>
 
           <span className={styles.heroOrbit} aria-hidden="true">✳</span>
-          <span className={styles.heroNote} aria-hidden="true">software<br />× insight</span>
         </section>
 
         <div className={styles.rule} aria-hidden="true"><span>THE THROUGH LINE</span><span>02—04</span></div>

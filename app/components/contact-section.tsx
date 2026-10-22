@@ -5,8 +5,7 @@ import { useContactReveal } from "./use-contact-reveal";
 import styles from "./contact-section.module.css";
 
 
-// Supply real contact details here when available. Placeholder actions stay disabled.
-const contact: { email: string; linkedin: string } = { email: "hafizikamal8@gmail.com", linkedin: "" };
+const contact = { email: "hafizikamal8@gmail.com" };
 
 export function ContactSection() {
   const [copyStatus, setCopyStatus] = useState("");
@@ -44,9 +43,6 @@ export function ContactSection() {
           </button>
           <span className={styles.copyStatus} role="status">{copyStatus}</span>
         </div>
-        {contact.linkedin ? (
-          <a className={styles.social} href={contact.linkedin} target="_blank" rel="noreferrer">LinkedIn <span aria-hidden="true">↗</span></a>
-        ) : <span className={styles.social} aria-disabled="true" title="LinkedIn link coming soon">LinkedIn <span aria-hidden="true">↗</span></span>}
       </div>
       <footer className={styles.footer}>
         <small>© 2026 Hafizi</small>

@@ -219,11 +219,6 @@ export function ProjectShowcase() {
                 ))}
               </motion.div>
             </AnimatePresence>
-            {!project.technologies.length && (
-              <p className={styles.emptyTechnologies}>
-                Technology details coming soon.
-              </p>
-            )}
           </div>
           <div className={styles.selection}>
             <div className={styles.selectionHeader}>
