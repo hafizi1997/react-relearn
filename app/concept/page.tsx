@@ -43,18 +43,35 @@ function MoodImage({ name, alt }: { name: string; alt: string }) {
 export default function ConceptPage() {
   return (
     <article className={styles.page}>
-      <OpeningStatement />
-
-      <section className={styles.hero} id="design-thinking" aria-labelledby="concept-heading">
-        <div className={styles.heroCopy}>
-          <p className={styles.label}>Design thinking</p>
-          <h2 id="concept-heading" className={styles.heading}>The concept<br />behind the design.</h2>
-          <p className={styles.description}>A closer look at the ideas, choices and principles that shape my website — and how they create a better experience.</p>
+      <section className={styles.harmony} id="harmony" aria-labelledby="harmony-heading">
+        <div className={styles.harmonyHero}>
+          <div className={styles.harmonyIntro}>
+            <h2 id="harmony-heading" className={styles.harmonyHeading}>Harmony</h2>
+            <p className={styles.harmonyLead}>Every element has its own purpose, but all elements work together to create one cohesive experience.</p>
+          </div>
+          <div className={styles.harmonyHeroImage}>
+            <Image src="/concept/Mediterranean Archway Collage-transparent.png" alt="A Mediterranean archway collage with natural stone, foliage and warm interior light" fill sizes="(max-width: 767px) 100vw, 52vw" />
+          </div>
+          <div className={styles.harmonyDistinction}>
+            <span className={styles.harmonyStar}>✦</span>
+            <p className={styles.harmonyQuote}>Harmony doesn’t mean everything must look the same.</p>
+            <p className={styles.harmonyNote}>It can include:</p>
+            <ul>
+              <li>Different font sizes</li><li>Different background shapes</li><li>Contrasting colors</li><li>Unique illustrations</li><li>Different section layouts</li>
+            </ul>
+          </div>
         </div>
-        <div className={styles.heroImage}>
-          <Image src="/concept/Sunlit UX Design Workspace.png" alt="A sunlit workspace with interface sketches, a notebook and a laptop" fill sizes="(max-width: 767px) 100vw, 55vw" preload />
+        <div className={styles.harmonyPrinciples}>
+          <div className={styles.harmonyPrinciplesLabel}>The<br />principles</div>
+          {["Consistency", "Balance", "Proportion", "Unity", "Rhythm"].map((title, index) => {
+            const images = ["Sunlit Foliage Shadows on Plaster", "Sunlit Glass Spheres and Stone", "Sunlit Tropical Leaves on Cream Wall", "Sunlit Stone and Wood Still Life", "Sunlit Olive Linen Folds"];
+            const descriptions = ["Reuse the same design patterns.", "Distribute visual weight appropriately.", "Maintain appropriate element sizes.", "Make elements feel like part of one design.", "Create consistent spacing and visual flow."];
+            return <article className={styles.harmonyPrinciple} key={title}><div className={styles.harmonyPrincipleImage}><Image src={`/concept/${images[index]}.png`} alt="" fill sizes="(max-width: 767px) 42vw, 16vw" /></div><span className={styles.harmonyNumber}>{String(index + 1).padStart(2, "0")}</span><h3>{title}</h3><p>{descriptions[index]}</p></article>;
+          })}
         </div>
       </section>
+
+      <OpeningStatement />
 
       <section className={`${styles.section} ${styles.idea}`} id="the-big-idea" aria-labelledby="idea-heading">
         <div>

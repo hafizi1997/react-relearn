@@ -5,7 +5,7 @@ import { SiteNav } from "../components/site-nav";
 import styles from "./concept.module.css";
 
 const items: SidebarItem[] = [
-  { label: "Design Thinking", href: "#design-thinking" },
+  { label: "Harmony", href: "#harmony" },
   { label: "The Big Idea", href: "#the-big-idea" },
   { label: "Design Principles", href: "#design-principles" },
   { label: "Visual Direction", href: "#visual-direction" },
