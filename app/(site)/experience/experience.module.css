@@ -1,6 +1,6 @@
 .page {
   --flower-width: 260px;
-  padding-left: var(--flower-width);
+  padding-left: 0;
 }
 
 .leftDecorations {
@@ -126,8 +126,8 @@
   position: relative;
   z-index: 3;
   width: 100%;
-  max-width: 1440px;
-  padding: 32px clamp(24px, 5vw, 64px) 80px;
+  max-width: 1520px;
+  padding: 32px clamp(24px, 4vw, 56px) 80px;
 }
 
 .heading {
